@@ -1,0 +1,331 @@
+/* =====================================================
+   MOBILE BOTTOM NAV
+===================================================== */
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+
+/* =====================================================
+   MOBILE ONLY
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .mobile-bottom-nav {
+    position: fixed;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    width: 100%;
+
+    height: 66px;
+
+    background: #ffffff;
+
+    border-top:
+      1px solid #dddddd;
+
+    box-shadow:
+      0 -3px 15px
+      rgba(0, 0, 0, 0.08);
+
+    z-index: 99999;
+
+    display: block;
+
+    box-sizing: border-box;
+
+    padding-bottom:
+      env(safe-area-inset-bottom);
+  }
+
+
+  /* =================================================
+     INNER
+  ================================================= */
+
+  .mobile-bottom-inner {
+    width: 100%;
+
+    height: 66px;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(5, 1fr);
+
+    align-items: center;
+
+    position: relative;
+  }
+
+
+  /* =================================================
+     NORMAL ITEM
+  ================================================= */
+
+  .mobile-bottom-item {
+    height: 66px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 3px;
+
+    text-decoration: none;
+
+    color: #888888;
+
+    font-family:
+      Arial,
+      Helvetica,
+      sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    transition:
+      color 0.25s ease;
+  }
+
+
+  /* =================================================
+     ICON
+  ================================================= */
+
+  .mobile-bottom-item svg {
+    width: 20px;
+
+    height: 20px;
+
+    stroke: currentColor;
+
+    stroke-width: 1.5;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+    transition:
+      transform 0.25s ease;
+  }
+
+
+  /* =================================================
+     ACTIVE
+  ================================================= */
+
+  .mobile-bottom-item.active {
+    color: #b86f84;
+  }
+
+
+  .mobile-bottom-item.active svg {
+    transform:
+      translateY(-1px);
+  }
+
+
+  /* =================================================
+     SEARCH ITEM
+  ================================================= */
+
+  .mobile-bottom-search {
+    height: 66px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    text-decoration: none;
+
+    color: #888888;
+
+    font-family:
+      Arial,
+      Helvetica,
+      sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 400;
+
+    position: relative;
+
+    z-index: 5;
+  }
+
+
+  /* =================================================
+     SEARCH CIRCLE
+  ================================================= */
+
+  .mobile-search-circle {
+    width: 58px;
+
+    height: 58px;
+
+    margin-top: -18px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    border:
+      1px solid #eeeeee;
+
+    box-shadow:
+      0
+      4px
+      18px
+      rgba(0, 0, 0, 0.12);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+
+  .mobile-search-circle svg {
+    width: 21px;
+
+    height: 21px;
+
+    stroke: #b86f84;
+
+    stroke-width: 1.7;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+  }
+
+
+  /* =================================================
+     SEARCH LABEL
+  ================================================= */
+
+  .mobile-search-label {
+    margin-top: 2px;
+
+    color: #888888;
+
+    line-height: 1;
+  }
+
+
+  /* =================================================
+     SEARCH ACTIVE
+  ================================================= */
+
+  .mobile-bottom-search.active {
+    color: #b86f84;
+  }
+
+
+  .mobile-bottom-search.active
+  .mobile-search-circle {
+    box-shadow:
+      0
+      5px
+      20px
+      rgba(184, 111, 132, 0.22);
+  }
+
+
+  /* =================================================
+     HOVER / TAP
+  ================================================= */
+
+  .mobile-bottom-item:active svg {
+    transform:
+      scale(0.92);
+  }
+
+
+  .mobile-bottom-search:active
+  .mobile-search-circle {
+    transform:
+      scale(0.94);
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .mobile-bottom-nav {
+    height: 62px;
+  }
+
+
+  .mobile-bottom-inner {
+    height: 62px;
+  }
+
+
+  .mobile-bottom-item {
+    height: 62px;
+
+    font-size: 9px;
+  }
+
+
+  .mobile-bottom-item svg {
+    width: 19px;
+
+    height: 19px;
+  }
+
+
+  .mobile-bottom-search {
+    height: 62px;
+
+    font-size: 9px;
+  }
+
+
+  .mobile-search-circle {
+    width: 54px;
+
+    height: 54px;
+
+    margin-top: -17px;
+  }
+
+
+  .mobile-search-circle svg {
+    width: 20px;
+
+    height: 20px;
+  }
+
+}

@@ -1,0 +1,659 @@
+/* =====================================================
+   REVIEWS PAGE
+===================================================== */
+
+.reviews-page {
+  width: 100%;
+
+  background: #f5f5f5;
+
+  padding-bottom: 70px;
+
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   BREADCRUMB
+===================================================== */
+
+.reviews-page-breadcrumb {
+  padding:
+    30px
+    60px;
+
+  background: #ffffff;
+
+  border-bottom:
+    1px
+    solid
+    #eeeeee;
+
+  color: #777;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+}
+
+
+/* =====================================================
+   HEADING
+===================================================== */
+
+.reviews-page-heading {
+  background: #ffffff;
+
+  text-align: center;
+
+  padding:
+    45px
+    20px
+    48px;
+}
+
+
+.reviews-page-heading h1 {
+  margin: 0;
+
+  color: #222;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 38px;
+
+  font-weight: 400;
+
+  letter-spacing: 5px;
+}
+
+
+.reviews-page-heading p {
+  margin:
+    15px
+    0
+    0;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   COUNT
+===================================================== */
+
+.reviews-page-count {
+  width: 100%;
+
+  max-width: 1450px;
+
+  margin:
+    0
+    auto;
+
+  padding:
+    25px
+    20px
+    15px;
+
+  box-sizing: border-box;
+
+  color: #333;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.reviews-page-grid {
+  width: 100%;
+
+  max-width: 1450px;
+
+  margin:
+    0
+    auto;
+
+  padding:
+    0
+    20px;
+
+  box-sizing: border-box;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 18px;
+
+  align-items: start;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.reviews-page-card {
+  background: #ffffff;
+
+  border-radius: 7px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0
+    2px
+    10px
+    rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.reviews-page-card:hover {
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0
+    8px
+    22px
+    rgba(0, 0, 0, 0.13);
+}
+
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.reviews-page-image {
+  width: 100%;
+
+  height: 380px;
+
+  overflow: hidden;
+
+  background: #eeeeee;
+}
+
+
+.reviews-page-image img {
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.5s ease;
+}
+
+
+.reviews-page-card:hover
+.reviews-page-image img {
+  transform:
+    scale(1.03);
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.reviews-page-content {
+  padding:
+    14px
+    13px
+    15px;
+
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   CUSTOMER
+===================================================== */
+
+.reviews-page-customer {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 11px;
+}
+
+
+.reviews-page-avatar {
+  width: 34px;
+
+  height: 34px;
+
+  flex:
+    0 0
+    34px;
+
+  border-radius: 50%;
+
+  overflow: hidden;
+
+  background: #eeeeee;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+.reviews-page-avatar img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+.reviews-page-avatar span {
+  color: #777;
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   CUSTOMER INFO
+===================================================== */
+
+.reviews-page-customer-info {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+.reviews-page-name {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #222;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+.reviews-page-verified {
+  width: 13px;
+
+  height: 13px;
+
+  border-radius: 50%;
+
+  background: #e7f5e9;
+
+  color: #228b3d;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 8px;
+}
+
+
+/* =====================================================
+   META
+===================================================== */
+
+.reviews-page-meta {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 5px;
+
+  margin-top: 4px;
+}
+
+
+.reviews-page-stars {
+  color: #f28b00;
+
+  font-size: 10px;
+}
+
+
+.reviews-page-date {
+  color: #888;
+
+  font-size: 8px;
+}
+
+
+/* =====================================================
+   REVIEW TEXT
+===================================================== */
+
+.reviews-page-text {
+  margin:
+    0
+    0
+    14px;
+
+  color: #555;
+
+  font-size: 11px;
+
+  line-height: 1.55;
+}
+
+
+/* =====================================================
+   PRODUCT
+===================================================== */
+
+.reviews-page-product {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  text-decoration: none;
+
+  border-top:
+    1px
+    solid
+    #eeeeee;
+
+  padding-top: 10px;
+
+  color: #444;
+
+  font-size: 9px;
+
+  line-height: 1.35;
+}
+
+
+.reviews-page-product-image {
+  width: 38px;
+
+  height: 38px;
+
+  flex:
+    0 0
+    38px;
+
+  overflow: hidden;
+
+  background: #eeeeee;
+}
+
+
+.reviews-page-product-image img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* =====================================================
+   1200px
+===================================================== */
+
+@media (max-width: 1200px) {
+
+  .reviews-page-grid {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+
+  .reviews-page-image {
+    height: 340px;
+  }
+
+}
+
+
+/* =====================================================
+   850px
+===================================================== */
+
+@media (max-width: 850px) {
+
+  .reviews-page-breadcrumb {
+    padding:
+      25px
+      20px;
+  }
+
+
+  .reviews-page-heading {
+    padding:
+      38px
+      15px
+      40px;
+  }
+
+
+  .reviews-page-heading h1 {
+    font-size: 30px;
+
+    letter-spacing: 4px;
+  }
+
+
+  .reviews-page-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 12px;
+
+    padding:
+      0
+      12px;
+  }
+
+
+  .reviews-page-image {
+    height: 300px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 500px) {
+
+  .reviews-page {
+    padding-bottom: 45px;
+  }
+
+
+  .reviews-page-breadcrumb {
+    padding:
+      20px
+      12px;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+  }
+
+
+  .reviews-page-heading {
+    padding:
+      30px
+      10px
+      32px;
+  }
+
+
+  .reviews-page-heading h1 {
+    font-size: 22px;
+
+    letter-spacing: 3px;
+  }
+
+
+  .reviews-page-heading p {
+    font-size: 11px;
+
+    margin-top: 10px;
+  }
+
+
+  .reviews-page-count {
+    padding:
+      20px
+      12px
+      12px;
+
+    font-size: 10px;
+  }
+
+
+  .reviews-page-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 8px;
+
+    padding:
+      0
+      8px;
+  }
+
+
+  .reviews-page-card {
+    border-radius: 5px;
+  }
+
+
+  .reviews-page-image {
+    height: 220px;
+  }
+
+
+  .reviews-page-content {
+    padding:
+      9px
+      7px
+      10px;
+  }
+
+
+  .reviews-page-customer {
+    gap: 6px;
+
+    margin-bottom: 7px;
+  }
+
+
+  .reviews-page-avatar {
+    width: 25px;
+
+    height: 25px;
+
+    flex-basis: 25px;
+  }
+
+
+  .reviews-page-name {
+    font-size: 9px;
+  }
+
+
+  .reviews-page-stars {
+    font-size: 7px;
+  }
+
+
+  .reviews-page-date {
+    font-size: 6px;
+  }
+
+
+  .reviews-page-text {
+    font-size: 8px;
+
+    line-height: 1.4;
+  }
+
+
+  .reviews-page-product {
+    font-size: 7px;
+
+    gap: 5px;
+  }
+
+
+  .reviews-page-product-image {
+    width: 28px;
+
+    height: 28px;
+
+    flex-basis: 28px;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 360px) {
+
+  .reviews-page-image {
+    height: 190px;
+  }
+
+}

@@ -1,0 +1,749 @@
+/* =====================================================
+   EVERYDAY ELEGANCE
+===================================================== */
+
+.everyday-section {
+  width: 100%;
+
+  background: #ffffff;
+
+  padding:
+    58px
+    60px
+    55px;
+
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.everyday-title {
+  margin:
+    0
+    0
+    42px;
+
+  text-align: center;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 34px;
+
+  font-weight: 400;
+
+  letter-spacing: 5px;
+
+  color: #333333;
+
+  line-height: 1.2;
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.everyday-container {
+  width: 100%;
+
+  max-width: 1720px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 20px;
+
+  perspective: 1200px;
+}
+
+
+/* =====================================================
+   FLIP CARD OUTER
+===================================================== */
+
+.everyday-flip-card {
+  width: 100%;
+
+  height: 575px;
+
+  position: relative;
+
+  perspective: 1200px;
+
+  overflow: visible;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.everyday-card {
+  position: relative;
+
+  width: 100%;
+
+  height: 100%;
+
+  overflow: hidden;
+
+  border-radius: 9px;
+
+  text-decoration: none;
+
+  background: #eeeeee;
+
+  display: block;
+
+  cursor: pointer;
+
+  transform-style: preserve-3d;
+
+  backface-visibility: hidden;
+
+  transition:
+    transform 0.3s
+    cubic-bezier(
+      0.4,
+      0,
+      0.2,
+      1
+    );
+}
+
+
+/* =====================================================
+   FLIP
+
+   Card 90 degree tak rotate hota hai,
+   data middle me change hota hai,
+   phir normal position par aata hai.
+===================================================== */
+
+.everyday-flip-card.is-flipping
+.everyday-card {
+
+  transform:
+    rotateY(90deg);
+}
+
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.everyday-image {
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.6s ease;
+}
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
+
+.everyday-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 42%,
+      rgba(0, 0, 0, 0.06) 60%,
+      rgba(0, 0, 0, 0.68) 100%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   IMAGE HOVER
+===================================================== */
+
+.everyday-card:hover
+.everyday-image {
+
+  transform:
+    scale(1.045);
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.everyday-card-content {
+  position: absolute;
+
+  left: 0;
+
+  right: 0;
+
+  bottom: 25px;
+
+  padding:
+    0
+    20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  color: #ffffff;
+
+  z-index: 2;
+}
+
+
+/* =====================================================
+   NAME
+===================================================== */
+
+.everyday-name {
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 19px;
+
+  font-weight: 400;
+
+  line-height: 1.2;
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+
+/* =====================================================
+   MOBILE NAME HIDDEN DESKTOP
+===================================================== */
+
+.mobile-name {
+  display: none;
+}
+
+
+/* =====================================================
+   ARROW
+===================================================== */
+
+.everyday-arrow {
+  width: 20px;
+
+  height: 20px;
+
+  flex:
+    0 0
+    20px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #222222;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 20px;
+
+  font-weight: 500;
+
+  line-height: 16px;
+
+  transition:
+    transform 0.3s ease;
+}
+
+
+.everyday-card:hover
+.everyday-arrow {
+
+  transform:
+    translateX(4px);
+}
+
+
+/* =====================================================
+   1400px
+===================================================== */
+
+@media (max-width: 1400px) {
+
+  .everyday-section {
+    padding:
+      50px
+      45px;
+  }
+
+
+  .everyday-flip-card {
+    height: 500px;
+  }
+
+
+  .everyday-title {
+    font-size: 31px;
+
+    margin-bottom: 36px;
+  }
+
+}
+
+
+/* =====================================================
+   1100px
+===================================================== */
+
+@media (max-width: 1100px) {
+
+  .everyday-section {
+    padding:
+      45px
+      30px;
+  }
+
+
+  .everyday-container {
+    gap: 15px;
+  }
+
+
+  .everyday-flip-card {
+    height: 430px;
+  }
+
+
+  .everyday-name {
+    font-size: 15px;
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 850px) {
+
+  .everyday-section {
+    padding:
+      42px
+      15px
+      45px;
+  }
+
+
+  .everyday-title {
+    font-size: 28px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 30px;
+  }
+
+
+  .everyday-container {
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+  }
+
+
+  .everyday-flip-card {
+    height: 390px;
+  }
+
+
+  .everyday-card-content {
+    bottom: 18px;
+
+    padding:
+      0
+      10px;
+
+    gap: 5px;
+  }
+
+
+  .everyday-name {
+    font-size: 14px;
+  }
+
+
+  .everyday-arrow {
+    width: 18px;
+
+    height: 18px;
+
+    flex-basis: 18px;
+
+    font-size: 17px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .everyday-section {
+    width: 100%;
+
+    padding:
+      24px
+      10px
+      30px;
+
+    box-sizing: border-box;
+  }
+
+
+  /* ===============================================
+     TITLE
+  =============================================== */
+
+  .everyday-title {
+
+    margin:
+      0
+      0
+      18px;
+
+    text-align: center;
+
+    font-size: 20px;
+
+    letter-spacing: 3px;
+
+    font-weight: 400;
+
+    line-height: 1.2;
+  }
+
+
+  /* ===============================================
+     2 × 2 GRID
+  =============================================== */
+
+  .everyday-container {
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+
+    max-width: none;
+  }
+
+
+  /* ===============================================
+     CARD
+  =============================================== */
+
+  .everyday-flip-card {
+
+    width: 100%;
+
+    height: 201px;
+
+    min-width: 0;
+
+    border-radius: 5px;
+  }
+
+
+  .everyday-card {
+
+    width: 100%;
+
+    height: 100%;
+
+    border-radius: 5px;
+  }
+
+
+  /* ===============================================
+     IMAGE
+  =============================================== */
+
+  .everyday-image {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+
+  /* ===============================================
+     OVERLAY
+  =============================================== */
+
+  .everyday-overlay {
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 45%,
+        rgba(0, 0, 0, 0.05) 62%,
+        rgba(0, 0, 0, 0.65) 100%
+      );
+  }
+
+
+  /* ===============================================
+     DESKTOP NAME HIDE
+  =============================================== */
+
+  .desktop-name {
+    display: none;
+  }
+
+
+  /* ===============================================
+     MOBILE NAME
+  =============================================== */
+
+  .mobile-name {
+
+    display: block;
+
+    font-size: 11px;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
+
+    text-align: center;
+
+    font-weight: 400;
+  }
+
+
+  /* ===============================================
+     CONTENT
+  =============================================== */
+
+  .everyday-card-content {
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 12px;
+
+    padding:
+      0
+      6px;
+
+    gap: 4px;
+
+    justify-content: center;
+  }
+
+
+  /* ===============================================
+     ARROW
+  =============================================== */
+
+  .everyday-arrow {
+
+    width: 15px;
+
+    height: 15px;
+
+    flex:
+      0 0
+      15px;
+
+    font-size: 14px;
+
+    line-height: 14px;
+  }
+
+
+  /* ===============================================
+     HOVER ZOOM OFF
+
+     Mobile par screenshot jaisa clean rahega.
+  =============================================== */
+
+  .everyday-card:hover
+  .everyday-image {
+
+    transform: none;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .everyday-section {
+
+    padding:
+      22px
+      8px
+      28px;
+  }
+
+
+  .everyday-title {
+
+    font-size: 18px;
+
+    letter-spacing: 2.5px;
+
+    margin-bottom: 17px;
+  }
+
+
+  .everyday-container {
+
+    gap: 7px;
+  }
+
+
+  .everyday-flip-card {
+
+    height: 270px;
+
+    border-radius: 5px;
+  }
+
+
+  .everyday-card {
+
+    border-radius: 5px;
+  }
+
+
+  .mobile-name {
+
+    font-size: 10px;
+  }
+
+
+  .everyday-card-content {
+
+    bottom: 11px;
+
+    gap: 3px;
+  }
+
+
+  .everyday-arrow {
+
+    width: 14px;
+
+    height: 14px;
+
+    flex-basis: 14px;
+
+    font-size: 13px;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media (max-width: 340px) {
+
+  .everyday-flip-card {
+
+    height: 185px;
+  }
+
+
+  .everyday-title {
+
+    font-size: 17px;
+  }
+
+
+  .mobile-name {
+
+    font-size: 9px;
+  }
+
+
+  .everyday-arrow {
+
+    width: 13px;
+
+    height: 13px;
+
+    flex-basis: 13px;
+
+    font-size: 12px;
+  }
+
+}
+
+
+/* =====================================================
+   REDUCE MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .everyday-card {
+
+    transition: none;
+  }
+
+}

@@ -1,0 +1,627 @@
+/* =====================================================
+   HERO SLIDER
+===================================================== */
+
+.hero-slider {
+  width: 100%;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background: #eee;
+
+  touch-action: pan-y;
+
+  user-select: none;
+}
+
+
+/* =====================================================
+   TRACK
+===================================================== */
+
+.hero-track {
+  width: 100%;
+
+  display: flex;
+
+  transition:
+    transform 0.8s cubic-bezier(
+      0.77,
+      0,
+      0.175,
+      1
+    );
+}
+
+
+/* =====================================================
+   SLIDE
+===================================================== */
+
+.hero-slide {
+  min-width: 100%;
+
+  width: 100%;
+
+  height: 720px;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.hero-image {
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position: center;
+}
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
+
+.hero-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 247, 229, 0.15) 0%,
+      rgba(255, 247, 229, 0.03) 45%,
+      rgba(0, 0, 0, 0.02) 100%
+    );
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.hero-content {
+  position: absolute;
+
+  left: 10%;
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: 430px;
+
+  color: #24170e;
+}
+
+
+/* =====================================================
+   SMALL TITLE
+===================================================== */
+
+.hero-small-title {
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 22px;
+
+  letter-spacing: 7px;
+
+  font-weight: 500;
+
+  margin-bottom: 14px;
+}
+
+
+/* =====================================================
+   DECORATION
+===================================================== */
+
+.hero-decoration {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  width: 150px;
+
+  margin-bottom: 22px;
+}
+
+.hero-decoration span:nth-child(1),
+.hero-decoration span:nth-child(3) {
+  width: 50px;
+
+  height: 1px;
+
+  background: #8f6e42;
+}
+
+.hero-decoration span:nth-child(2) {
+  font-size: 18px;
+
+  color: #8f6e42;
+}
+
+
+/* =====================================================
+   HEADING
+===================================================== */
+
+.hero-content h1 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 72px;
+
+  font-weight: 400;
+
+  line-height: 0.98;
+
+  letter-spacing: -2px;
+}
+
+
+.hero-content h1 em {
+  display: block;
+
+  color: #987a47;
+
+  font-size: 56px;
+
+  font-style: italic;
+
+  margin-top: 8px;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.hero-content p {
+  margin:
+    30px
+    0
+    30px;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 18px;
+
+  line-height: 1.55;
+
+  color: #514333;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.hero-button {
+  border: none;
+
+  background: #24170e;
+
+  color: #ffffff;
+
+  padding:
+    17px
+    28px;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 14px;
+
+  letter-spacing: 1.8px;
+
+  cursor: pointer;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.hero-button span {
+  font-size: 20px;
+
+  line-height: 1;
+}
+
+
+.hero-button:hover {
+  background: #000000;
+
+  transform:
+    translateY(-2px);
+}
+
+
+/* =====================================================
+   ARROWS
+===================================================== */
+
+.hero-arrow {
+  position: absolute;
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: 48px;
+
+  height: 48px;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.7);
+
+  background:
+    rgba(0, 0, 0, 0.15);
+
+  color: #ffffff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+  z-index: 5;
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.hero-arrow span {
+  font-size: 34px;
+
+  line-height: 1;
+
+  font-family:
+    Arial,
+    sans-serif;
+}
+
+
+.hero-arrow:hover {
+  background:
+    rgba(0, 0, 0, 0.55);
+}
+
+
+.hero-arrow-left {
+  left: 25px;
+}
+
+
+.hero-arrow-right {
+  right: 25px;
+}
+
+
+/* =====================================================
+   DOTS
+===================================================== */
+
+.hero-dots {
+  position: absolute;
+
+  left: 50%;
+
+  bottom: 20px;
+
+  transform:
+    translateX(-50%);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  z-index: 10;
+}
+
+
+.hero-dot {
+  width: 8px;
+
+  height: 8px;
+
+  border-radius: 50%;
+
+  border: 1px solid #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.4);
+
+  padding: 0;
+
+  cursor: pointer;
+
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
+}
+
+
+.hero-dot.active {
+  width: 28px;
+
+  border-radius: 20px;
+
+  background: #ffffff;
+}
+
+
+/* =====================================================
+   1250px
+===================================================== */
+
+@media (max-width: 1250px) {
+
+  .hero-slide {
+    height: 620px;
+  }
+
+
+  .hero-content {
+    left: 8%;
+
+    width: 390px;
+  }
+
+
+  .hero-content h1 {
+    font-size: 62px;
+  }
+
+
+  .hero-content h1 em {
+    font-size: 48px;
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 850px) {
+
+  .hero-slide {
+    height: 560px;
+  }
+
+
+  .hero-content {
+    left: 7%;
+
+    width: 350px;
+  }
+
+
+  .hero-small-title {
+    font-size: 17px;
+
+    letter-spacing: 5px;
+  }
+
+
+  .hero-content h1 {
+    font-size: 50px;
+  }
+
+
+  .hero-content h1 em {
+    font-size: 40px;
+  }
+
+
+  .hero-content p {
+    font-size: 15px;
+
+    margin:
+      22px
+      0;
+  }
+
+
+  .hero-arrow {
+    width: 40px;
+
+    height: 40px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .hero-slide {
+    height: 620px;
+  }
+
+
+  .hero-image {
+    object-position: 65% center;
+  }
+
+
+  .hero-overlay {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(255, 247, 229, 0.78) 0%,
+        rgba(255, 247, 229, 0.48) 48%,
+        rgba(255, 247, 229, 0.05) 100%
+      );
+  }
+
+
+  .hero-content {
+    left: 25px;
+
+    top: 50%;
+
+    width: calc(100% - 50px);
+  }
+
+
+  .hero-small-title {
+    font-size: 13px;
+
+    letter-spacing: 4px;
+  }
+
+
+  .hero-decoration {
+    margin-bottom: 15px;
+  }
+
+
+  .hero-content h1 {
+    font-size: 43px;
+
+    line-height: 1;
+  }
+
+
+  .hero-content h1 em {
+    font-size: 34px;
+
+    margin-top: 6px;
+  }
+
+
+  .hero-content p {
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin:
+      20px
+      0
+      24px;
+  }
+
+
+  .hero-button {
+    padding:
+      14px
+      20px;
+
+    font-size: 11px;
+
+    letter-spacing: 1.3px;
+  }
+
+
+  .hero-arrow {
+    width: 34px;
+
+    height: 34px;
+
+    top: auto;
+
+    bottom: 22px;
+
+    transform: none;
+  }
+
+
+  .hero-arrow-left {
+    left: 20px;
+  }
+
+
+  .hero-arrow-right {
+    right: 20px;
+  }
+
+
+  .hero-dots {
+    bottom: 34px;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .hero-slide {
+    height: 580px;
+  }
+
+
+  .hero-content {
+    left: 20px;
+
+    width: calc(100% - 40px);
+  }
+
+
+  .hero-content h1 {
+    font-size: 37px;
+  }
+
+
+  .hero-content h1 em {
+    font-size: 29px;
+  }
+
+
+  .hero-content p {
+    font-size: 13px;
+  }
+
+}

@@ -1,0 +1,579 @@
+/* =====================================================
+   PRODUCT VIDEO SECTION
+===================================================== */
+
+.product-video-section {
+  width: 100%;
+
+  background: #ffffff;
+
+  padding:
+    55px
+    60px
+    45px;
+
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.product-video-title {
+  margin:
+    0
+    0
+    35px;
+
+  text-align: center;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 30px;
+
+  font-weight: 400;
+
+  letter-spacing: 4px;
+
+  color: #333333;
+
+  line-height: 1.2;
+}
+
+
+/* =====================================================
+   SLIDER WRAPPER
+===================================================== */
+
+.product-video-slider-wrapper {
+  width: 100%;
+
+  max-width: 1800px;
+
+  margin: 0 auto;
+
+  position: relative;
+}
+
+
+/* =====================================================
+   PRODUCT CONTAINER
+===================================================== */
+
+.product-video-container {
+  width: 100%;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 15px;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  padding:
+    0
+    0
+    10px;
+
+  box-sizing: border-box;
+
+  scroll-behavior: smooth;
+
+  touch-action: pan-x;
+
+  cursor: grab;
+
+  /*
+    HORIZONTAL SCROLLBAR HIDE
+  */
+
+  scrollbar-width: none;
+
+  -ms-overflow-style: none;
+}
+
+
+/* Chrome / Edge / Safari */
+
+.product-video-container::-webkit-scrollbar {
+  display: none;
+
+  width: 0;
+
+  height: 0;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.product-video-card {
+  flex:
+    0 0 225px;
+
+  width: 225px;
+
+  background: #ffffff;
+
+  border-radius:
+    0
+    0
+    14px
+    14px;
+
+  overflow: hidden;
+
+  text-decoration: none;
+
+  box-shadow:
+    0
+    3px
+    12px
+    rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.product-video-card:hover {
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0
+    8px
+    22px
+    rgba(0, 0, 0, 0.13);
+}
+
+
+/* =====================================================
+   VIDEO WRAPPER
+===================================================== */
+
+.product-video-wrapper {
+  width: 100%;
+
+  height: 405px;
+
+  overflow: hidden;
+
+  background: #eeeeee;
+}
+
+
+/* =====================================================
+   VIDEO
+===================================================== */
+
+.product-video {
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  background: #eeeeee;
+}
+
+
+/* =====================================================
+   PRODUCT INFO
+===================================================== */
+
+.product-video-info {
+  min-height: 125px;
+
+  padding:
+    10px
+    10px
+    13px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  text-align: center;
+}
+
+
+/* =====================================================
+   PRODUCT NAME
+===================================================== */
+
+.product-video-name {
+  margin: 0;
+
+  color: #333333;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 400;
+
+  line-height: 1.3;
+
+  display: -webkit-box;
+
+  -webkit-line-clamp: 3;
+
+  line-clamp: 3;
+
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+
+/* =====================================================
+   PRICE
+===================================================== */
+
+.product-video-price {
+  margin-top: 8px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 5px;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+}
+
+
+.old-price {
+  color: #ff3d2e;
+
+  text-decoration: line-through;
+
+  font-size: 12px;
+}
+
+
+.current-price {
+  color: #222222;
+
+  font-size: 12px;
+}
+
+
+/* =====================================================
+   SLIDER ARROWS
+===================================================== */
+
+.product-slider-arrow {
+  position: absolute;
+
+  top: 45%;
+
+  transform:
+    translateY(-50%);
+
+  z-index: 10;
+
+  width: 42px;
+
+  height: 42px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #222222;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 32px;
+
+  font-weight: 300;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow:
+    0
+    3px
+    12px
+    rgba(0, 0, 0, 0.15);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* =====================================================
+   LEFT
+===================================================== */
+
+.product-slider-arrow-left {
+  left: -21px;
+}
+
+
+/* =====================================================
+   RIGHT
+===================================================== */
+
+.product-slider-arrow-right {
+  right: -21px;
+}
+
+
+/* =====================================================
+   ARROW HOVER
+===================================================== */
+
+.product-slider-arrow:hover {
+  background: #111111;
+
+  color: #ffffff;
+
+  box-shadow:
+    0
+    5px
+    18px
+    rgba(0, 0, 0, 0.22);
+}
+
+
+.product-slider-arrow-left:hover {
+  transform:
+    translateY(-50%)
+    translateX(-2px);
+}
+
+
+.product-slider-arrow-right:hover {
+  transform:
+    translateY(-50%)
+    translateX(2px);
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+
+  .product-video-section {
+    padding:
+      45px
+      30px
+      40px;
+  }
+
+
+  .product-video-card {
+    flex-basis: 210px;
+
+    width: 210px;
+  }
+
+
+  .product-video-wrapper {
+    height: 370px;
+  }
+
+
+  .product-video-title {
+    font-size: 27px;
+  }
+
+
+  .product-slider-arrow {
+    width: 38px;
+
+    height: 38px;
+
+    font-size: 28px;
+  }
+
+
+  .product-slider-arrow-left {
+    left: -19px;
+  }
+
+
+  .product-slider-arrow-right {
+    right: -19px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .product-video-section {
+    padding:
+      38px
+      10px
+      35px;
+  }
+
+
+  .product-video-title {
+    font-size: 22px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 25px;
+  }
+
+
+  .product-video-container {
+    gap: 12px;
+
+    padding:
+      0
+      0
+      8px;
+  }
+
+
+  .product-video-card {
+    flex:
+      0 0 185px;
+
+    width: 185px;
+
+    border-radius:
+      0
+      0
+      10px
+      10px;
+  }
+
+
+  .product-video-wrapper {
+    height: 330px;
+  }
+
+
+  .product-video-info {
+    min-height: 110px;
+
+    padding:
+      9px
+      8px
+      11px;
+  }
+
+
+  .product-video-name {
+    font-size: 10px;
+
+    line-height: 1.3;
+  }
+
+
+  .old-price,
+  .current-price {
+    font-size: 10px;
+  }
+
+
+  /* ===============================================
+     MOBILE ARROWS
+  =============================================== */
+
+  .product-slider-arrow {
+    width: 32px;
+
+    height: 32px;
+
+    font-size: 25px;
+
+    top: 42%;
+  }
+
+
+  .product-slider-arrow-left {
+    left: -5px;
+  }
+
+
+  .product-slider-arrow-right {
+    right: -5px;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .product-video-card {
+    flex-basis: 170px;
+
+    width: 170px;
+  }
+
+
+  .product-video-wrapper {
+    height: 300px;
+  }
+
+
+  .product-slider-arrow {
+    width: 30px;
+
+    height: 30px;
+
+    font-size: 23px;
+  }
+
+
+  .product-slider-arrow-left {
+    left: -3px;
+  }
+
+
+  .product-slider-arrow-right {
+    right: -3px;
+  }
+
+}
