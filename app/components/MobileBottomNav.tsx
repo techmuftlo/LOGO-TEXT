@@ -87,35 +87,28 @@ export default function MobileBottomNav({
 
         {/* ================= SEARCH ================= */}
 
-        <NavLink
-          to="/search"
-          className={({ isActive }) =>
-            `mobile-bottom-search ${
-              isActive ? "active" : ""
-            }`
-          }
-        >
-          <span className="mobile-search-circle">
+<button
+  type="button"
+  className="mobile-bottom-search"
+  onClick={() => {
+    const searchBtn = document.querySelector(
+      '.mobile-header-icon[aria-label="Search"]'
+    ) as HTMLButtonElement;
 
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <circle
-                cx="10.5"
-                cy="10.5"
-                r="6"
-              />
+    searchBtn?.click();
+  }}
+>
+  <span className="mobile-search-circle">
+    <svg viewBox="0 0 24 24" fill="none">
+      <circle cx="10.5" cy="10.5" r="6" />
+      <path d="M15 15L20.5 20.5" />
+    </svg>
+  </span>
 
-              <path d="M15 15L20.5 20.5" />
-            </svg>
-
-          </span>
-
-          <span className="mobile-search-label">
-            Search
-          </span>
-        </NavLink>
+  <span className="mobile-search-label">
+    Search
+  </span>
+</button>
 
 
         {/* ================= CART ================= */}
