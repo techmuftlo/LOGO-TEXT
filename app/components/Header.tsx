@@ -617,7 +617,7 @@ export default function Header({
                         <img
                           src={
                             product.images?.[0] ||
-                            product.image ||
+                            
                             ""
                           }
                           alt={
