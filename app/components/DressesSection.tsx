@@ -21,8 +21,8 @@ export default function DressesSection() {
       <div className="dresses-grid">
         {dresses.map((dress) => (
           <Link
-            key={dress.id}
-            to={`/product/${dress.id}`}
+            key={dress.slug}
+            to={`/product/${dress.slug}`}
             className="dress-card"
           >
             {/* IMAGE */}

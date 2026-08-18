@@ -31,6 +31,7 @@ import "./Cart.css";
 
 export type CartItem = {
   cartId: string;
+  slug: string;
 
   productId: number;
 
@@ -644,7 +645,7 @@ export default function Cart() {
                 {/* IMAGE */}
 
                 <Link
-                  to={`/product/${item.productId}`}
+                  to={`/product/${item.slug}`}
                   className="cart-item-image"
                 >
 
@@ -661,7 +662,7 @@ export default function Cart() {
                 <div className="cart-item-info">
 
                   <Link
-                    to={`/product/${item.productId}`}
+                    to={`/product/${item.slug}`}
                     className="cart-item-name"
                   >
                     {item.name}

@@ -32,7 +32,7 @@ import {
   Link,
   useNavigate,
   useParams,
-} from "react-router-dom";
+} from "react-router";
 
 import { products } from "../data/products";
 import { dresses } from "../data/dresses";
@@ -52,6 +52,7 @@ type ColorVariant = {
 
 type ProductData = {
   id: number;
+  slug: string;
   name: string;
   category: string;
 
@@ -131,7 +132,7 @@ export default function Product() {
 
   const navigate = useNavigate();
 
-  const productId = Number(id);
+  const productId = String(id);
 
 
   /* =======================================================
@@ -151,7 +152,7 @@ export default function Product() {
   const product = useMemo(() => {
 
     return allProducts.find(
-      (item) => item.id === productId
+      (item) => item.slug === productId
     );
 
   }, [
@@ -633,7 +634,7 @@ const [sizeUnit, setSizeUnit] =
   const cartItem = {
 
     cartId,
-
+    slug: product.slug,
     productId:
       product.id,
 
@@ -799,7 +800,7 @@ const [sizeUnit, setSizeUnit] =
     allProducts
       .filter(
         (item) =>
-          item.id !== product.id
+          item.slug !== product.slug
       )
       .slice(0, 10);
 
@@ -2241,8 +2242,8 @@ const [sizeUnit, setSizeUnit] =
             (related) => (
 
               <Link
-                key={related.id}
-                to={`/product/${related.id}`}
+                key={related.slug}
+                to={`/product/${related.slug}`}
                 className="related-product-card"
                 onClick={() =>
                   window.scrollTo(

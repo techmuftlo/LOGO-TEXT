@@ -181,8 +181,8 @@ export default function ProductVideoSlider() {
 
           {products.map((product) => (
             <Link
-              key={product.id}
-              to={`/product/${product.id}`}
+              key={product.slug}
+              to={`/product/${product.slug}`}
               className="product-video-card"
             >
 

@@ -7,6 +7,7 @@ export type ColorVariant = {
 
 export type Product = {
   id: number;
+  slug: string;
   video: string;
   name: string;
   category: string;
@@ -26,6 +27,7 @@ export type Product = {
 export const products: Product[] = [
   {
     id: 1,
+     slug: "womens-designer-kurta-palazzo-set-with-heavy-zari-embellished",
     video: "/videos/products/video-01.mp4",
     name: "Women's Designer Kurta Palazzo Set with Heavy Zari Embellished",
     category: "Palazzo Set",
@@ -66,6 +68,7 @@ export const products: Product[] = [
 
   {
     id: 2,
+     slug: "women's-embroidered-floral-v-neck-kurta-set",
     video: "/videos/products/video-02.mp4",
     name: "Women's Embroidered Floral V-Neck Kurta Set",
     category: "Straight Kurta Set",
@@ -114,6 +117,7 @@ export const products: Product[] = [
 
   {
     id: 3,
+    slug: "women's-embroidered-v-neck-kurta-pant-with-dupatta",
     video: "/videos/products/video-03.mp4",
     name: "Women's Embroidered V-Neck Kurta Pant With Dupatta",
     category: "Kurta Set",
@@ -154,6 +158,7 @@ export const products: Product[] = [
 
   {
     id: 4,
+    slug: "women's-round-neck-anarkali-tiered-flared-dress",
     video: "/videos/products/video-04.mp4",
     name: "Women's Round Neck Anarkali Tiered Flared Dress",
     category: "Anarkali",
@@ -194,6 +199,7 @@ export const products: Product[] = [
 
   {
     id: 5,
+    slug: "women's-embroidered-v-neck-kurta-pant-with-dupatta",
     video: "/videos/products/video-05.mp4",
     name: "Women's Embroidered V-Neck Kurta Pant Dupatta Set",
     category: "Kurta Set",
@@ -234,6 +240,7 @@ export const products: Product[] = [
 
   {
     id: 6,
+    slug: "women-brown-embroidered-anarkali-kurta-pant-dupatta-set",
     video: "/videos/products/video-06.mp4",
     name: "Women Brown Embroidered Anarkali Kurta Pant Dupatta Set",
     category: "Anarkali",
@@ -266,6 +273,7 @@ export const products: Product[] = [
 
   {
     id: 7,
+    slug: "women-mirror-work-a-line-top-palazzo-suit",
     video: "/videos/products/video-07.mp4",
     name: "Women Mirror Work A-Line Top Palazzo Suit",
     category: "A-Line Kurta Set",
@@ -306,6 +314,7 @@ export const products: Product[] = [
 
   {
     id: 8,
+slug: "womens-designer-embroidered-ethnic-suit-set",
     video: "/videos/products/video-08.mp4",
     name: "Women's Designer Embroidered Ethnic Suit Set",
     category: "Ethnic Wear",
@@ -345,7 +354,9 @@ export const products: Product[] = [
   },
 
   {
-    id: 9,
+    
+id: 9,
+slug: "womens-festive-embroidered-palazzo-suit",
     video: "/videos/products/video-09.mp4",
     name: "Women's Festive Embroidered Palazzo Suit",
     category: "Palazzo Set",
@@ -386,6 +397,7 @@ export const products: Product[] = [
 
   {
     id: 10,
+slug: "womens-floral-embroidered-gown",
     video: "/videos/products/video-10.mp4",
     name: "Women's Floral Embroidered Gown",
     category: "Gown",
@@ -425,7 +437,8 @@ export const products: Product[] = [
   },
 
   {
-    id: 11,
+   id: 11,
+slug: "womens-printed-straight-kurta-set",
     video: "/videos/products/video-11.mp4",
     name: "Women's Printed Straight Kurta Set",
     category: "Straight Kurta Set",
@@ -466,6 +479,7 @@ export const products: Product[] = [
 
   {
     id: 12,
+slug: "womens-designer-sharara-dupatta-set",
     video: "/videos/products/video-12.mp4",
     name: "Women's Designer Sharara Dupatta Set",
     category: "Sharara Set",
@@ -505,7 +519,8 @@ export const products: Product[] = [
   },
 
   {
-    id: 13,
+   id: 13,
+slug: "womens-elegant-a-line-kurta-set",
     video: "/videos/products/video-13.mp4",
     name: "Women's Elegant A-Line Kurta Set",
     category: "A-Line Kurta Set",
@@ -546,6 +561,7 @@ export const products: Product[] = [
 
   {
     id: 14,
+slug: "womens-premium-anarkali-festive-dress",
     video: "/videos/products/video-14.mp4",
     name: "Women's Premium Anarkali Festive Dress",
     category: "Anarkali",
@@ -586,6 +602,8 @@ export const products: Product[] = [
 
   {
     id: 15,
+slug: "womens-party-wear-embroidered-kurta-set",
+
     video: "/videos/products/video-15.mp4",
     name: "Women's Party Wear Embroidered Kurta Set",
     category: "Party Wear",
@@ -626,6 +644,7 @@ export const products: Product[] = [
 
   {
     id: 16,
+slug: "womens-classic-embroidered-gown",
     video: "/videos/products/video-16.mp4",
     name: "Women's Classic Embroidered Gown",
     category: "Gown",
@@ -666,6 +685,7 @@ export const products: Product[] = [
 
   {
     id: 17,
+slug: "womens-festive-palazzo-dupatta-set",
     video: "/videos/products/video-17.mp4",
     name: "Women's Festive Palazzo Dupatta Set",
     category: "Palazzo Set",
@@ -705,7 +725,8 @@ export const products: Product[] = [
   },
 
   {
-    id: 18,
+id: 18,
+slug: "womens-contemporary-western-dress",
     video: "/videos/products/video-18.mp4",
     name: "Women's Contemporary Western Dress",
     category: "Western Wear",
@@ -746,6 +767,7 @@ export const products: Product[] = [
 
   {
     id: 19,
+slug: "womens-premium-sharara-party-wear-set",
     video: "/videos/products/video-19.mp4",
     name: "Women's Premium Sharara Party Wear Set",
     category: "Sharara Set",
@@ -786,6 +808,7 @@ export const products: Product[] = [
 
   {
     id: 20,
+slug: "womens-designer-ethnic-collection-set",
     video: "/videos/products/video-20.mp4",
     name: "Women's Designer Ethnic Collection Set",
     category: "Ethnic Wear",

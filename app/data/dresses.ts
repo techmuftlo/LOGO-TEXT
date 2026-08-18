@@ -6,6 +6,7 @@ export type ColorVariant = {
 
 export type DressProduct = {
   id: number;
+  slug: string;
   image: string;
   name: string;
   price: number;
@@ -25,6 +26,7 @@ export type DressProduct = {
 export const dresses: DressProduct[] = [
   {
     id: 101,
+    slug:  "womens-elegant-black-pleated-shirt-dress-with-waist-tie",
 
     image: "/images/dresses/dress-01.jpg",
 
@@ -65,7 +67,7 @@ export const dresses: DressProduct[] = [
 
   {
     id: 102,
-
+    slug: "womens-striped-sleeveless-square-neck-fit-flare-maxi-dress",
     image: "/images/dresses/dress-02.jpg",
 
     name:
@@ -113,7 +115,7 @@ export const dresses: DressProduct[] = [
 
   {
     id: 103,
-
+    slug: "womens-gingham-check-halter-neck-sleeveless-maxi-dress",
     image: "/images/dresses/dress-03.jpg",
 
     name:
@@ -157,6 +159,7 @@ export const dresses: DressProduct[] = [
 
   {
     id: 104,
+    slug: "womens-blue-white-tropical-print-sleeveless-square-neck-maxi-dress",
 
     image: "/images/dresses/dress-04.jpg",
 
@@ -209,7 +212,7 @@ export const dresses: DressProduct[] = [
 
   {
     id: 105,
-
+    slug: "womens-black-floral-printed-wrap-style-maxi-dress",
     image: "/images/dresses/dress-05.jpg",
 
     name:
@@ -261,7 +264,7 @@ export const dresses: DressProduct[] = [
 
   {
     id: 106,
-
+    slug: "womens-black-white-striped-shirt-style-midi-dress",
     image: "/images/dresses/dress-06.jpg",
 
     name:
@@ -313,6 +316,7 @@ export const dresses: DressProduct[] = [
 
   {
     id: 107,
+    slug: "womens-square-neck-ruffle-sleeve-tiered-midi-dress",
 
     image: "/images/dresses/dress-07.jpg",
 
@@ -357,6 +361,7 @@ export const dresses: DressProduct[] = [
 
   {
     id: 108,
+    slug: "womens-shoulder-strap-long-fit-flare-maxi-dress",
 
     image: "/images/dresses/dress-08.jpg",
 

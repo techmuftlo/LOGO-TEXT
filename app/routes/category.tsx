@@ -1,7 +1,18 @@
-import { useMemo, useState } from "react";
-import { Link, useParams } from "react-router";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+import {
+  Link,
+  useParams,
+} from "react-router";
+
 import { products } from "../data/products";
+
 import "./Category.css";
+
 
 /* =====================================================
    CATEGORY CONFIG
@@ -14,6 +25,7 @@ const categoryConfig: Record<
     category: string;
   }
 > = {
+
   "anarkali-suit": {
     title: "ANARKALI SUIT",
     category: "Anarkali",
@@ -52,14 +64,44 @@ const categoryConfig: Record<
 
 
 /* =====================================================
+   SORT OPTIONS
+===================================================== */
+
+const sortOptions = [
+  {
+    value: "FEATURED",
+    label: "FEATURED",
+  },
+  {
+    value: "LOW",
+    label: "PRICE: LOW TO HIGH",
+  },
+  {
+    value: "HIGH",
+    label: "PRICE: HIGH TO LOW",
+  },
+  {
+    value: "DISCOUNT",
+    label: "BIGGEST DISCOUNT",
+  },
+  {
+    value: "RATING",
+    label: "TOP RATED",
+  },
+];
+
+
+/* =====================================================
    MAIN CATEGORY
 ===================================================== */
 
 export default function Category() {
+
   const { slug } = useParams();
 
+
   /* =====================================================
-     CATEGORY
+     CURRENT CATEGORY
   ===================================================== */
 
   const currentCategory =
@@ -94,15 +136,56 @@ export default function Category() {
 
 
   /* =====================================================
+     MOBILE POPUP STATES
+  ===================================================== */
+
+  const [mobileFilterOpen, setMobileFilterOpen] =
+    useState(false);
+
+  const [mobileSortOpen, setMobileSortOpen] =
+    useState(false);
+
+
+  /* =====================================================
+     TEMP MOBILE FILTER STATES
+
+     User can select multiple options inside popup
+     and then press APPLY.
+  ===================================================== */
+
+  const [tempPrice, setTempPrice] =
+    useState("ALL");
+
+  const [tempColor, setTempColor] =
+    useState("ALL");
+
+  const [tempSize, setTempSize] =
+    useState("ALL");
+
+  const [tempTag, setTempTag] =
+    useState("ALL");
+
+  const [tempProductType, setTempProductType] =
+    useState("ALL");
+
+
+  /* =====================================================
      CATEGORY PRODUCTS
   ===================================================== */
 
   const categoryProducts = useMemo(() => {
+
+    if (!currentCategory.category) {
+      return [];
+    }
+
     return products.filter(
       (product) =>
-        product.category.toLowerCase() ===
+        String(product.category || "")
+          .toLowerCase() ===
         currentCategory.category.toLowerCase()
     );
+
   }, [currentCategory.category]);
 
 
@@ -111,13 +194,18 @@ export default function Category() {
   ===================================================== */
 
   const availableColors = useMemo(() => {
+
     const colors = categoryProducts.flatMap(
-      (product) => product.colors
+      (product) =>
+        Array.isArray(product.colors)
+          ? product.colors
+          : []
     );
 
     return [
       ...new Set(colors),
     ].sort();
+
   }, [categoryProducts]);
 
 
@@ -126,110 +214,162 @@ export default function Category() {
   ===================================================== */
 
   const availableSizes = useMemo(() => {
+
     const sizes = categoryProducts.flatMap(
-      (product) => product.sizes
+      (product) =>
+        Array.isArray(product.sizes)
+          ? product.sizes
+          : []
     );
 
     return [
       ...new Set(sizes),
     ].sort();
+
   }, [categoryProducts]);
 
 
   /* =====================================================
-     FILTER PRODUCTS
+     FILTER + SORT
   ===================================================== */
 
   const filteredProducts = useMemo(() => {
+
     let result = [...categoryProducts];
 
 
     /* =================================================
-       PRICE
+       PRICE FILTER
     ================================================= */
 
     if (price === "UNDER999") {
+
       result = result.filter(
         (product) =>
-          product.price < 999
+          Number(product.price) < 999
       );
+
     }
 
-    if (price === "999-1499") {
+    else if (price === "999-1499") {
+
       result = result.filter(
         (product) =>
-          product.price >= 999 &&
-          product.price <= 1499
+          Number(product.price) >= 999 &&
+          Number(product.price) <= 1499
       );
+
     }
 
-    if (price === "1500-1999") {
+    else if (price === "1500-1999") {
+
       result = result.filter(
         (product) =>
-          product.price >= 1500 &&
-          product.price <= 1999
+          Number(product.price) >= 1500 &&
+          Number(product.price) <= 1999
       );
+
     }
 
-    if (price === "2000PLUS") {
+    else if (price === "2000PLUS") {
+
       result = result.filter(
         (product) =>
-          product.price >= 2000
+          Number(product.price) >= 2000
       );
+
     }
 
 
     /* =================================================
-       COLOR
+       COLOR FILTER
     ================================================= */
 
     if (color !== "ALL") {
+
       result = result.filter(
-        (product) =>
-          product.colors.some(
+        (product) => {
+
+          const productColors =
+            Array.isArray(product.colors)
+              ? product.colors
+              : [];
+
+          return productColors.some(
             (productColor) =>
-              productColor.toLowerCase() ===
-              color.toLowerCase()
-          )
+              String(productColor)
+                .toLowerCase()
+                .trim() ===
+              String(color)
+                .toLowerCase()
+                .trim()
+          );
+
+        }
       );
+
     }
 
 
     /* =================================================
-       SIZE
+       SIZE FILTER
     ================================================= */
 
     if (size !== "ALL") {
+
       result = result.filter(
-        (product) =>
-          product.sizes.includes(size)
+        (product) => {
+
+          const productSizes =
+            Array.isArray(product.sizes)
+              ? product.sizes
+              : [];
+
+          return productSizes.some(
+            (productSize) =>
+              String(productSize)
+                .toLowerCase()
+                .trim() ===
+              String(size)
+                .toLowerCase()
+                .trim()
+          );
+
+        }
       );
+
     }
 
 
     /* =================================================
-       TAG
+       TAG FILTER
     ================================================= */
 
     if (tag === "SALE") {
+
       result = result.filter(
         (product) =>
-          product.discount > 0
+          Number(product.discount || 0) > 0
       );
+
     }
 
-    if (tag === "TRENDING") {
+    else if (tag === "TRENDING") {
+
       result = result.filter(
         (product) =>
-          product.rating >= 4.7
+          Number(product.rating || 0) >= 4.7
       );
+
     }
 
-    if (tag === "BESTSELLER") {
+    else if (tag === "BESTSELLER") {
+
       result = result.filter(
         (product) =>
-          product.reviews >= 100
+          Number(product.reviews || 0) >= 100
       );
+
     }
 
 
@@ -238,11 +378,17 @@ export default function Category() {
     ================================================= */
 
     if (productType !== "ALL") {
+
       result = result.filter(
         (product) =>
-          product.category ===
-          productType
+          String(product.category || "")
+            .toLowerCase()
+            .trim() ===
+          String(productType)
+            .toLowerCase()
+            .trim()
       );
+
     }
 
 
@@ -251,34 +397,52 @@ export default function Category() {
     ================================================= */
 
     if (sort === "LOW") {
+
       result.sort(
         (a, b) =>
-          a.price - b.price
+          Number(a.price || 0) -
+          Number(b.price || 0)
       );
+
     }
 
-    if (sort === "HIGH") {
+    else if (sort === "HIGH") {
+
       result.sort(
         (a, b) =>
-          b.price - a.price
+          Number(b.price || 0) -
+          Number(a.price || 0)
       );
+
     }
 
-    if (sort === "DISCOUNT") {
+    else if (sort === "DISCOUNT") {
+
       result.sort(
         (a, b) =>
-          b.discount - a.discount
+          Number(b.discount || 0) -
+          Number(a.discount || 0)
       );
+
     }
 
-    if (sort === "RATING") {
+    else if (sort === "RATING") {
+
       result.sort(
         (a, b) =>
-          b.rating - a.rating
+          Number(b.rating || 0) -
+          Number(a.rating || 0)
       );
+
     }
+
+    /*
+      FEATURED:
+      original products order remains unchanged.
+    */
 
     return result;
+
   }, [
     categoryProducts,
     price,
@@ -291,21 +455,220 @@ export default function Category() {
 
 
   /* =====================================================
-     RESET FILTERS
+     ACTIVE FILTER COUNT
+  ===================================================== */
+
+  const activeFilterCount = [
+    price !== "ALL",
+    color !== "ALL",
+    size !== "ALL",
+    tag !== "ALL",
+    productType !== "ALL",
+  ].filter(Boolean).length;
+
+
+  /* =====================================================
+     OPEN FILTER POPUP
+  ===================================================== */
+
+  const openFilterPopup = () => {
+
+    setTempPrice(price);
+    setTempColor(color);
+    setTempSize(size);
+    setTempTag(tag);
+    setTempProductType(productType);
+
+    setMobileSortOpen(false);
+    setMobileFilterOpen(true);
+
+  };
+
+
+  /* =====================================================
+     OPEN SORT POPUP
+  ===================================================== */
+
+  const openSortPopup = () => {
+
+    setMobileFilterOpen(false);
+    setMobileSortOpen(true);
+
+  };
+
+
+  /* =====================================================
+     CLOSE POPUPS
+  ===================================================== */
+
+  const closeMobilePopups = () => {
+
+    setMobileFilterOpen(false);
+    setMobileSortOpen(false);
+
+  };
+
+
+  /* =====================================================
+     APPLY MOBILE FILTER
+  ===================================================== */
+
+  const applyMobileFilters = () => {
+
+    setPrice(tempPrice);
+    setColor(tempColor);
+    setSize(tempSize);
+    setTag(tempTag);
+    setProductType(tempProductType);
+
+    setMobileFilterOpen(false);
+
+  };
+
+
+  /* =====================================================
+     CLEAR MOBILE TEMP FILTERS
+  ===================================================== */
+
+  const clearMobileFilters = () => {
+
+    setTempPrice("ALL");
+    setTempColor("ALL");
+    setTempSize("ALL");
+    setTempTag("ALL");
+    setTempProductType("ALL");
+
+  };
+
+
+  /* =====================================================
+     RESET ALL
   ===================================================== */
 
   const resetFilters = () => {
+
     setPrice("ALL");
     setColor("ALL");
     setSize("ALL");
     setTag("ALL");
     setProductType("ALL");
     setSort("FEATURED");
+
+    setTempPrice("ALL");
+    setTempColor("ALL");
+    setTempSize("ALL");
+    setTempTag("ALL");
+    setTempProductType("ALL");
+
+    setMobileFilterOpen(false);
+    setMobileSortOpen(false);
+
   };
 
 
+  /* =====================================================
+     SORT SELECT
+  ===================================================== */
+
+  const handleSortChange = (
+    value: string
+  ) => {
+
+    setSort(value);
+
+    setMobileSortOpen(false);
+
+  };
+
+
+  /* =====================================================
+     BODY SCROLL LOCK
+  ===================================================== */
+
+  useEffect(() => {
+
+    const popupOpen =
+      mobileFilterOpen ||
+      mobileSortOpen;
+
+    if (popupOpen) {
+
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+
+    }
+    else {
+
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+
+    }
+
+    return () => {
+
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+
+    };
+
+  }, [
+    mobileFilterOpen,
+    mobileSortOpen,
+  ]);
+
+
+  /* =====================================================
+     ESC KEY CLOSE
+  ===================================================== */
+
+  useEffect(() => {
+
+    const handleEscape = (
+      event: KeyboardEvent
+    ) => {
+
+      if (event.key === "Escape") {
+        closeMobilePopups();
+      }
+
+    };
+
+    window.addEventListener(
+      "keydown",
+      handleEscape
+    );
+
+    return () => {
+
+      window.removeEventListener(
+        "keydown",
+        handleEscape
+      );
+
+    };
+
+  }, []);
+
+
+  /* =====================================================
+     CURRENT SORT LABEL
+  ===================================================== */
+
+  const currentSortLabel =
+    sortOptions.find(
+      (item) =>
+        item.value === sort
+    )?.label || "SORT BY";
+
+
+  /* =====================================================
+     RENDER
+  ===================================================== */
+
   return (
+
     <main className="category-page">
+
 
       {/* =================================================
           BREADCRUMB
@@ -333,7 +696,7 @@ export default function Category() {
 
 
       {/* =================================================
-          CATEGORY HEADING
+          HEADING
       ================================================= */}
 
       <section className="category-heading">
@@ -343,14 +706,14 @@ export default function Category() {
         </h1>
 
         <p>
-          {currentCategory.title}
+          {filteredProducts.length} PRODUCTS
         </p>
 
       </section>
 
 
       {/* =================================================
-          HORIZONTAL FILTER BAR
+          DESKTOP FILTER BAR
       ================================================= */}
 
       <div className="category-filter-wrapper">
@@ -358,7 +721,7 @@ export default function Category() {
         <div className="category-filter-bar">
 
 
-          {/* ================= PRICE ================= */}
+          {/* PRICE */}
 
           <select
             value={price}
@@ -390,7 +753,7 @@ export default function Category() {
           </select>
 
 
-          {/* ================= COLOR ================= */}
+          {/* COLOR */}
 
           <select
             value={color}
@@ -405,19 +768,21 @@ export default function Category() {
 
             {availableColors.map(
               (item) => (
+
                 <option
                   key={item}
                   value={item}
                 >
                   {item}
                 </option>
+
               )
             )}
 
           </select>
 
 
-          {/* ================= SIZE ================= */}
+          {/* SIZE */}
 
           <select
             value={size}
@@ -432,19 +797,21 @@ export default function Category() {
 
             {availableSizes.map(
               (item) => (
+
                 <option
                   key={item}
                   value={item}
                 >
                   {item}
                 </option>
+
               )
             )}
 
           </select>
 
 
-          {/* ================= TAGS ================= */}
+          {/* TAGS */}
 
           <select
             value={tag}
@@ -472,7 +839,7 @@ export default function Category() {
           </select>
 
 
-          {/* ================= PRODUCT TYPE ================= */}
+          {/* PRODUCT TYPE */}
 
           <select
             value={productType}
@@ -485,47 +852,13 @@ export default function Category() {
               PRODUCT TYPE
             </option>
 
-            <option value={currentCategory.category}>
+            <option
+              value={currentCategory.category}
+            >
               {currentCategory.title}
             </option>
 
           </select>
-
-        </div>
-
-      </div>
-
-
-      {/* =================================================
-          TOOLBAR
-      ================================================= */}
-
-      <div className="category-toolbar">
-
-        <span>
-          {filteredProducts.length} PRODUCTS
-        </span>
-
-
-        <div className="category-toolbar-right">
-
-          {/* RESET */}
-
-          {(price !== "ALL" ||
-            color !== "ALL" ||
-            size !== "ALL" ||
-            tag !== "ALL" ||
-            productType !== "ALL") && (
-
-            <button
-              type="button"
-              className="reset-filter"
-              onClick={resetFilters}
-            >
-              RESET
-            </button>
-
-          )}
 
 
           {/* SORT */}
@@ -535,7 +868,6 @@ export default function Category() {
             onChange={(e) =>
               setSort(e.target.value)
             }
-            className="category-sort"
           >
 
             <option value="FEATURED">
@@ -566,6 +898,89 @@ export default function Category() {
 
 
       {/* =================================================
+          MOBILE FILTER BAR
+      ================================================= */}
+
+      <div className="mobile-category-filter-bar">
+
+        <button
+          type="button"
+          onClick={openFilterPopup}
+        >
+
+          <span>
+            FILTER
+          </span>
+
+          {activeFilterCount > 0 && (
+
+            <span className="mobile-filter-count">
+              {activeFilterCount}
+            </span>
+
+          )}
+
+        </button>
+
+
+        <button
+          type="button"
+          onClick={openSortPopup}
+        >
+
+          <span>
+            SORT BY
+          </span>
+
+          <span className="mobile-sort-arrow">
+            ↓
+          </span>
+
+        </button>
+
+      </div>
+
+
+      {/* =================================================
+          TOOLBAR
+      ================================================= */}
+
+      <div className="category-toolbar">
+
+        <span>
+          {filteredProducts.length} PRODUCTS
+        </span>
+
+
+        <div className="category-toolbar-right">
+
+          {(price !== "ALL" ||
+            color !== "ALL" ||
+            size !== "ALL" ||
+            tag !== "ALL" ||
+            productType !== "ALL" ||
+            sort !== "FEATURED") && (
+
+            <button
+              type="button"
+              className="reset-filter"
+              onClick={resetFilters}
+            >
+              RESET
+            </button>
+
+          )}
+
+          <span className="desktop-current-sort">
+            {currentSortLabel}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      {/* =================================================
           PRODUCT GRID
       ================================================= */}
 
@@ -577,23 +992,32 @@ export default function Category() {
             (product) => (
 
               <Link
-                key={product.id}
-                to={`/product/${product.id}`}
+                key={
+                  product.slug ||
+                  product.id
+                }
+                to={`/product/${
+                  product.slug ||
+                  product.id
+                }`}
                 className="category-product-card"
               >
 
-                {/* ================= IMAGE ================= */}
+
+                {/* IMAGE */}
 
                 <div className="category-product-image">
 
-                  {product.discount > 0 && (
+                  {Number(product.discount || 0) > 0 && (
+
                     <span className="sale-badge">
                       SAVE {product.discount}%
                     </span>
+
                   )}
 
                   <img
-                    src={product.images[0]}
+                    src={product.images?.[0]}
                     alt={product.name}
                     loading="lazy"
                   />
@@ -601,7 +1025,7 @@ export default function Category() {
                 </div>
 
 
-                {/* ================= INFO ================= */}
+                {/* INFO */}
 
                 <div className="category-product-info">
 
@@ -613,18 +1037,27 @@ export default function Category() {
                   <div className="category-product-price">
 
                     <span className="category-current-price">
+
                       ₹
-                      {product.price.toLocaleString(
-                        "en-IN"
-                      )}
+                      {Number(
+                        product.price || 0
+                      ).toLocaleString("en-IN")}
+
                     </span>
 
-                    <span className="category-old-price">
-                      ₹
-                      {product.oldPrice.toLocaleString(
-                        "en-IN"
-                      )}
-                    </span>
+
+                    {product.oldPrice && (
+
+                      <span className="category-old-price">
+
+                        ₹
+                        {Number(
+                          product.oldPrice
+                        ).toLocaleString("en-IN")}
+
+                      </span>
+
+                    )}
 
                   </div>
 
@@ -633,6 +1066,7 @@ export default function Category() {
               </Link>
 
             )
+
           )
 
         ) : (
@@ -656,6 +1090,675 @@ export default function Category() {
 
       </section>
 
+
+      {/* =================================================
+          MOBILE FILTER POPUP
+      ================================================= */}
+
+      {mobileFilterOpen && (
+
+        <div
+          className="mobile-category-overlay"
+          onClick={closeMobilePopups}
+        >
+
+          <div
+            className="mobile-category-popup"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
+
+
+            {/* HEADER */}
+
+            <div className="mobile-popup-header">
+
+              <div>
+
+                <h2>
+                  FILTER
+                </h2>
+
+                <p>
+                  {activeFilterCount > 0
+                    ? `${activeFilterCount} FILTERS SELECTED`
+                    : "SELECT YOUR PREFERENCES"}
+                </p>
+
+              </div>
+
+
+              <button
+                type="button"
+                className="mobile-popup-close"
+                onClick={closeMobilePopups}
+                aria-label="Close filter"
+              >
+                ×
+              </button>
+
+            </div>
+
+
+            {/* CONTENT */}
+
+            <div className="mobile-popup-content">
+
+
+              {/* PRICE */}
+
+              <div className="popup-filter-group">
+
+                <label>
+                  PRICE
+                </label>
+
+                <div className="popup-options">
+
+                  <button
+                    type="button"
+                    className={
+                      tempPrice === "ALL"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempPrice("ALL")
+                    }
+                  >
+                    ALL
+                  </button>
+
+                  <button
+                    type="button"
+                    className={
+                      tempPrice === "UNDER999"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempPrice("UNDER999")
+                    }
+                  >
+                    UNDER ₹999
+                  </button>
+
+                  <button
+                    type="button"
+                    className={
+                      tempPrice === "999-1499"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempPrice("999-1499")
+                    }
+                  >
+                    ₹999 - ₹1,499
+                  </button>
+
+                  <button
+                    type="button"
+                    className={
+                      tempPrice === "1500-1999"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempPrice("1500-1999")
+                    }
+                  >
+                    ₹1,500 - ₹1,999
+                  </button>
+
+                  <button
+                    type="button"
+                    className={
+                      tempPrice === "2000PLUS"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempPrice("2000PLUS")
+                    }
+                  >
+                    ₹2,000+
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              {/* COLOR */}
+
+              <div className="popup-filter-group">
+
+                <label>
+                  COLOR
+                </label>
+
+                <div className="popup-options">
+
+                  <button
+                    type="button"
+                    className={
+                      tempColor === "ALL"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempColor("ALL")
+                    }
+                  >
+                    ALL
+                  </button>
+
+                  {availableColors.map(
+                    (item) => (
+
+                      <button
+                        type="button"
+                        key={item}
+                        className={
+                          tempColor === item
+                            ? "active"
+                            : ""
+                        }
+                        onClick={() =>
+                          setTempColor(item)
+                        }
+                      >
+                        {item}
+                      </button>
+
+                    )
+                  )}
+
+                </div>
+
+              </div>
+
+
+              {/* SIZE */}
+
+              <div className="popup-filter-group">
+
+                <label>
+                  SIZE
+                </label>
+
+                <div className="popup-options">
+
+                  <button
+                    type="button"
+                    className={
+                      tempSize === "ALL"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempSize("ALL")
+                    }
+                  >
+                    ALL
+                  </button>
+
+                  {availableSizes.map(
+                    (item) => (
+
+                      <button
+                        type="button"
+                        key={item}
+                        className={
+                          tempSize === item
+                            ? "active"
+                            : ""
+                        }
+                        onClick={() =>
+                          setTempSize(item)
+                        }
+                      >
+                        {item}
+                      </button>
+
+                    )
+                  )}
+
+                </div>
+
+              </div>
+
+
+              {/* TAGS */}
+
+              <div className="popup-filter-group">
+
+                <label>
+                  TAGS
+                </label>
+
+                <div className="popup-options">
+
+                  <button
+                    type="button"
+                    className={
+                      tempTag === "ALL"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempTag("ALL")
+                    }
+                  >
+                    ALL
+                  </button>
+
+                  <button
+                    type="button"
+                    className={
+                      tempTag === "SALE"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempTag("SALE")
+                    }
+                  >
+                    SALE
+                  </button>
+
+                  <button
+                    type="button"
+                    className={
+                      tempTag === "TRENDING"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempTag("TRENDING")
+                    }
+                  >
+                    TRENDING
+                  </button>
+
+                  <button
+                    type="button"
+                    className={
+                      tempTag === "BESTSELLER"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempTag("BESTSELLER")
+                    }
+                  >
+                    BEST SELLER
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              {/* PRODUCT TYPE */}
+
+              <div className="popup-filter-group">
+
+                <label>
+                  PRODUCT TYPE
+                </label>
+
+                <div className="popup-options">
+
+                  <button
+                    type="button"
+                    className={
+                      tempProductType === "ALL"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempProductType("ALL")
+                    }
+                  >
+                    ALL
+                  </button>
+
+                  <button
+                    type="button"
+                    className={
+                      tempProductType ===
+                      currentCategory.category
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setTempProductType(
+                        currentCategory.category
+                      )
+                    }
+                  >
+                    {currentCategory.title}
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              {/* APPLY */}
+
+              <button
+                type="button"
+                className="mobile-apply-button"
+                onClick={applyMobileFilters}
+              >
+                SHOW {getFilterPreviewCount(
+                  categoryProducts,
+                  tempPrice,
+                  tempColor,
+                  tempSize,
+                  tempTag,
+                  tempProductType
+                )} PRODUCTS
+              </button>
+
+
+              {/* CLEAR */}
+
+              <button
+                type="button"
+                className="mobile-clear-button"
+                onClick={clearMobileFilters}
+              >
+                CLEAR ALL FILTERS
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+
+
+      {/* =================================================
+          MOBILE SORT POPUP
+      ================================================= */}
+
+      {mobileSortOpen && (
+
+        <div
+          className="mobile-category-overlay"
+          onClick={closeMobilePopups}
+        >
+
+          <div
+            className="mobile-category-popup mobile-sort-popup"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
+
+
+            {/* HEADER */}
+
+            <div className="mobile-popup-header">
+
+              <div>
+
+                <h2>
+                  SORT BY
+                </h2>
+
+                <p>
+                  {currentSortLabel}
+                </p>
+
+              </div>
+
+
+              <button
+                type="button"
+                className="mobile-popup-close"
+                onClick={closeMobilePopups}
+                aria-label="Close sort"
+              >
+                ×
+              </button>
+
+            </div>
+
+
+            {/* SORT OPTIONS */}
+
+            <div className="sort-mobile-options">
+
+              {sortOptions.map(
+                (option) => (
+
+                  <button
+                    type="button"
+                    key={option.value}
+                    className={
+                      sort === option.value
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      handleSortChange(
+                        option.value
+                      )
+                    }
+                  >
+
+                    <span>
+                      {option.label}
+                    </span>
+
+                    {sort === option.value && (
+
+                      <b>
+                        ✓
+                      </b>
+
+                    )}
+
+                  </button>
+
+                )
+              )}
+
+            </div>
+
+
+            {/* SORT CLOSE */}
+
+            <button
+              type="button"
+              className="mobile-sort-done"
+              onClick={closeMobilePopups}
+            >
+              DONE
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
+
     </main>
+
   );
+}
+
+
+/* =====================================================
+   MOBILE FILTER PREVIEW COUNT
+
+   This is only used for the "SHOW X PRODUCTS"
+   button inside popup.
+===================================================== */
+
+function getFilterPreviewCount(
+  categoryProducts: typeof products,
+  price: string,
+  color: string,
+  size: string,
+  tag: string,
+  productType: string
+) {
+
+  let result = [...categoryProducts];
+
+
+  /* PRICE */
+
+  if (price === "UNDER999") {
+
+    result = result.filter(
+      (product) =>
+        Number(product.price) < 999
+    );
+
+  }
+
+  else if (price === "999-1499") {
+
+    result = result.filter(
+      (product) =>
+        Number(product.price) >= 999 &&
+        Number(product.price) <= 1499
+    );
+
+  }
+
+  else if (price === "1500-1999") {
+
+    result = result.filter(
+      (product) =>
+        Number(product.price) >= 1500 &&
+        Number(product.price) <= 1999
+    );
+
+  }
+
+  else if (price === "2000PLUS") {
+
+    result = result.filter(
+      (product) =>
+        Number(product.price) >= 2000
+    );
+
+  }
+
+
+  /* COLOR */
+
+  if (color !== "ALL") {
+
+    result = result.filter(
+      (product) => {
+
+        const colors =
+          Array.isArray(product.colors)
+            ? product.colors
+            : [];
+
+        return colors.some(
+          (item) =>
+            String(item)
+              .toLowerCase()
+              .trim() ===
+            color
+              .toLowerCase()
+              .trim()
+        );
+
+      }
+    );
+
+  }
+
+
+  /* SIZE */
+
+  if (size !== "ALL") {
+
+    result = result.filter(
+      (product) => {
+
+        const sizes =
+          Array.isArray(product.sizes)
+            ? product.sizes
+            : [];
+
+        return sizes.some(
+          (item) =>
+            String(item)
+              .toLowerCase()
+              .trim() ===
+            size
+              .toLowerCase()
+              .trim()
+        );
+
+      }
+    );
+
+  }
+
+
+  /* TAG */
+
+  if (tag === "SALE") {
+
+    result = result.filter(
+      (product) =>
+        Number(product.discount || 0) > 0
+    );
+
+  }
+
+  else if (tag === "TRENDING") {
+
+    result = result.filter(
+      (product) =>
+        Number(product.rating || 0) >= 4.7
+    );
+
+  }
+
+  else if (tag === "BESTSELLER") {
+
+    result = result.filter(
+      (product) =>
+        Number(product.reviews || 0) >= 100
+    );
+
+  }
+
+
+  /* PRODUCT TYPE */
+
+  if (productType !== "ALL") {
+
+    result = result.filter(
+      (product) =>
+        String(product.category || "")
+          .toLowerCase()
+          .trim() ===
+        productType
+          .toLowerCase()
+          .trim()
+    );
+
+  }
+
+
+  return result.length;
 }

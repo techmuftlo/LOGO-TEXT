@@ -4,6 +4,7 @@
 
 .all-products-page {
   width: 100%;
+  min-height: 100vh;
   background: #ffffff;
   color: #222222;
 }
@@ -14,24 +15,16 @@
 ===================================================== */
 
 .all-products-breadcrumb {
-  padding:
-    32px
-    60px
-    0;
+  width: 100%;
+  padding: 32px 60px 0;
+  box-sizing: border-box;
 
   display: flex;
-
   align-items: center;
-
   gap: 10px;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
-
   letter-spacing: 2px;
 
   color: #777777;
@@ -39,8 +32,11 @@
 
 .all-products-breadcrumb a {
   color: #777777;
-
   text-decoration: none;
+}
+
+.all-products-breadcrumb a:hover {
+  color: #111111;
 }
 
 
@@ -49,47 +45,143 @@
 ===================================================== */
 
 .all-products-heading {
+  width: 100%;
   text-align: center;
 
-  padding:
-    38px
-    20px
-    45px;
+  padding: 38px 20px 45px;
+  box-sizing: border-box;
 }
 
 .all-products-heading h1 {
   margin: 0;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 38px;
-
   font-weight: 400;
-
   letter-spacing: 5px;
 
   color: #111111;
 }
 
 .all-products-heading p {
-  margin:
-    18px
-    0
-    0;
+  margin: 18px 0 0;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 11px;
-
   letter-spacing: 2px;
 
   color: #777777;
+}
+
+
+/* =====================================================
+   DESKTOP FILTER
+===================================================== */
+
+.desktop-filter-wrapper {
+  width: 100%;
+  padding: 0 60px;
+
+  box-sizing: border-box;
+
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+
+  background: #ffffff;
+}
+
+.all-products-filter-bar {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.all-products-filter-bar select {
+  flex: 1;
+  min-width: 0;
+
+  height: 62px;
+
+  padding: 0 18px;
+
+  border: 0;
+  border-right: 1px solid #eeeeee;
+
+  outline: none;
+
+  background: #ffffff;
+  color: #333333;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 11px;
+  letter-spacing: 1.8px;
+
+  cursor: pointer;
+}
+
+.all-products-filter-bar select:first-child {
+  border-left: 1px solid #eeeeee;
+}
+
+.all-products-filter-bar select:hover,
+.all-products-filter-bar select:focus {
+  background: #fafafa;
+}
+
+
+/* =====================================================
+   MOBILE FILTER BAR
+===================================================== */
+
+.mobile-filter-bar {
+  display: none;
+}
+
+
+/* =====================================================
+   TOOLBAR
+===================================================== */
+
+.all-products-toolbar {
+  width: 100%;
+
+  padding: 18px 60px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 10px;
+  letter-spacing: 1.8px;
+
+  color: #777777;
+}
+
+.all-products-toolbar button {
+  border: 0;
+  padding: 0;
+
+  background: transparent;
+  color: #333333;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 10px;
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.all-products-toolbar button:hover {
+  color: #000000;
 }
 
 
@@ -100,10 +192,7 @@
 .all-products-grid {
   width: 100%;
 
-  padding:
-    0
-    60px
-    70px;
+  padding: 0 60px 70px;
 
   box-sizing: border-box;
 
@@ -112,14 +201,13 @@
   grid-template-columns:
     repeat(4, minmax(0, 1fr));
 
-  gap:
-    42px
-    20px;
+  column-gap: 20px;
+  row-gap: 42px;
 }
 
 
 /* =====================================================
-   CARD
+   PRODUCT CARD
 ===================================================== */
 
 .all-product-card {
@@ -128,13 +216,14 @@
   min-width: 0;
 
   color: #111111;
-
   text-decoration: none;
+
+  overflow: hidden;
 }
 
 
 /* =====================================================
-   IMAGE
+   PRODUCT IMAGE
 ===================================================== */
 
 .all-product-image {
@@ -151,7 +240,6 @@
 
 .all-product-image img {
   width: 100%;
-
   height: 100%;
 
   display: block;
@@ -159,13 +247,9 @@
   object-fit: cover;
 
   transition:
-    transform 0.5s ease;
+    transform 0.5s
+    cubic-bezier(0.2, 0.6, 0.2, 1);
 }
-
-
-/* =====================================================
-   HOVER
-===================================================== */
 
 .all-product-card:hover
 .all-product-image img {
@@ -174,53 +258,51 @@
 
 
 /* =====================================================
-   SALE
+   SALE BADGE
 ===================================================== */
 
 .all-product-sale {
   position: absolute;
 
   top: 8px;
-
   left: 8px;
 
   z-index: 2;
 
-  padding:
-    5px
-    8px;
+  padding: 5px 8px;
 
   background: #e53935;
 
   color: #ffffff;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 
   font-size: 8px;
+  font-weight: 400;
 
   letter-spacing: 0.5px;
+
+  line-height: 1;
 }
 
 
 /* =====================================================
-   INFO
+   PRODUCT INFO
 ===================================================== */
 
 .all-product-info {
-  padding:
-    12px
-    5px
-    0;
+  width: 100%;
+
+  padding: 12px 5px 0;
+
+  box-sizing: border-box;
 
   text-align: center;
 }
 
 
 /* =====================================================
-   NAME
+   PRODUCT NAME
 ===================================================== */
 
 .all-product-name {
@@ -228,23 +310,17 @@
 
   color: #333333;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 
   font-size: 10px;
-
   font-weight: 400;
 
   line-height: 1.45;
-
   letter-spacing: 0.8px;
 
   display: -webkit-box;
 
   -webkit-line-clamp: 2;
-
   line-clamp: 2;
 
   -webkit-box-orient: vertical;
@@ -263,22 +339,17 @@
   display: flex;
 
   justify-content: center;
-
   align-items: center;
 
   gap: 7px;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .all-current-price {
   color: #111111;
 
   font-size: 11px;
-
   font-weight: 600;
 }
 
@@ -286,8 +357,68 @@
   color: #999999;
 
   font-size: 10px;
+  font-weight: 400;
 
   text-decoration: line-through;
+}
+
+
+/* =====================================================
+   EMPTY PRODUCTS
+===================================================== */
+
+.all-products-empty {
+  grid-column: 1 / -1;
+
+  text-align: center;
+
+  padding: 80px 20px;
+
+  color: #777777;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 11px;
+
+  letter-spacing: 1.5px;
+}
+
+.all-products-empty p {
+  margin: 0;
+}
+
+.all-products-empty button {
+  margin-top: 15px;
+
+  border: 1px solid #222222;
+
+  background: #ffffff;
+
+  color: #222222;
+
+  padding: 10px 20px;
+
+  cursor: pointer;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 10px;
+
+  letter-spacing: 1.5px;
+}
+
+.all-products-empty button:hover {
+  background: #222222;
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   MOBILE POPUP
+===================================================== */
+
+.mobile-filter-overlay {
+  display: none;
 }
 
 
@@ -298,6 +429,16 @@
 @media (max-width: 1100px) {
 
   .all-products-breadcrumb {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+
+  .desktop-filter-wrapper {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+
+  .all-products-toolbar {
     padding-left: 35px;
     padding-right: 35px;
   }
@@ -319,334 +460,617 @@
 
 @media (max-width: 768px) {
 
+  /* =================================================
+     BREADCRUMB
+  ================================================= */
+
   .all-products-breadcrumb {
-    padding:
-      22px
-      20px
-      0;
+    padding: 22px 20px 0;
 
     font-size: 9px;
+
+    letter-spacing: 1.5px;
   }
 
+
+  /* =================================================
+     HEADING
+  ================================================= */
 
   .all-products-heading {
-    padding:
-      30px
-      15px
-      32px;
+    padding: 30px 15px 28px;
   }
-
 
   .all-products-heading h1 {
     font-size: 27px;
-
     letter-spacing: 4px;
   }
 
-
   .all-products-heading p {
+    margin-top: 14px;
+
     font-size: 9px;
+    letter-spacing: 1.5px;
   }
 
 
+  /* =================================================
+     HIDE DESKTOP FILTER
+  ================================================= */
+
+  .desktop-filter-wrapper {
+    display: none;
+  }
+
+
+  /* =================================================
+     MOBILE FILTER + SORT BAR
+  ================================================= */
+
+  .mobile-filter-bar {
+    width: 100%;
+
+    height: 54px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+
+    background: #ffffff;
+
+    box-sizing: border-box;
+
+    position: relative;
+
+    z-index: 20;
+  }
+
+  .mobile-filter-bar button {
+    height: 54px;
+
+    border: 0;
+
+    background: #ffffff;
+
+    color: #777777;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 400;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    position: relative;
+  }
+
+  .mobile-filter-bar button:first-child {
+    border-right: 1px solid #dddddd;
+  }
+
+  .mobile-filter-bar button:active {
+    background: #f8f8f8;
+  }
+
+
+  /* =================================================
+     FILTER COUNT
+  ================================================= */
+
+  .mobile-filter-count {
+    min-width: 17px;
+
+    height: 17px;
+
+    padding: 0 4px;
+
+    box-sizing: border-box;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #111111;
+
+    color: #ffffff;
+
+    font-size: 8px;
+
+    letter-spacing: 0;
+  }
+
+
+  /* =================================================
+     SORT ARROW
+  ================================================= */
+
+  .sort-arrow {
+    font-size: 16px;
+
+    line-height: 1;
+
+    color: #777777;
+  }
+
+
+  /* =================================================
+     TOOLBAR
+  ================================================= */
+
+  .all-products-toolbar {
+    padding: 14px 15px;
+
+    font-size: 9px;
+
+    letter-spacing: 1.4px;
+  }
+
+  .all-products-toolbar button {
+    font-size: 9px;
+
+    letter-spacing: 1.2px;
+  }
+
+
+  /* =================================================
+     GRID
+  ================================================= */
+
   .all-products-grid {
-    padding:
-      0
-      15px
-      50px;
+    padding: 0 15px 70px;
 
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
 
-    gap:
-      28px
-      10px;
+    column-gap: 10px;
+
+    row-gap: 28px;
   }
 
+
+  /* =================================================
+     IMAGE
+  ================================================= */
+
+  .all-product-image {
+    aspect-ratio: 0.72;
+  }
+
+
+  /* =================================================
+     INFO
+  ================================================= */
+
+  .all-product-info {
+    padding: 10px 3px 0;
+  }
+
+
+  /* =================================================
+     NAME
+  ================================================= */
 
   .all-product-name {
     font-size: 8px;
 
+    line-height: 1.45;
+
     letter-spacing: 0.6px;
   }
 
+
+  /* =================================================
+     PRICE
+  ================================================= */
+
+  .all-product-price {
+    margin-top: 7px;
+
+    gap: 5px;
+  }
 
   .all-current-price,
   .all-old-price {
     font-size: 9px;
   }
 
-}
 
+  /* =================================================
+     SALE
+  ================================================= */
 
-/* =====================================================
-   SMALL MOBILE
-===================================================== */
+  .all-product-sale {
+    top: 6px;
+    left: 6px;
 
-@media (max-width: 420px) {
+    padding: 4px 6px;
 
-  .all-products-grid {
-    padding-left: 10px;
-    padding-right: 10px;
-
-    gap:
-      25px
-      8px;
+    font-size: 7px;
   }
 
-}
-/* =====================================================
-   HORIZONTAL FILTER BAR
-===================================================== */
 
-.all-products-filter-wrapper {
-  width: 100%;
+  /* =================================================
+     POPUP OVERLAY
 
-  padding:
-    0
-    60px;
+     IMPORTANT:
+     z-index very high so it stays ABOVE
+     bottom navigation.
+  ================================================= */
 
-  box-sizing: border-box;
+  .mobile-filter-overlay {
+    display: flex;
 
-  border-top: 1px solid #eeeeee;
+    position: fixed;
 
-  border-bottom: 1px solid #eeeeee;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-  overflow: hidden;
-}
+    width: 100%;
+    height: 100%;
 
+    z-index: 2147483647;
 
-.all-products-filter-bar {
-  width: 100%;
+    background: rgba(0, 0, 0, 0.38);
 
-  display: flex;
+    align-items: flex-end;
 
-  align-items: center;
+    justify-content: center;
 
-  justify-content: center;
-}
-
-
-/* =====================================================
-   FILTER SELECT
-===================================================== */
-
-.all-products-filter-bar select {
-  flex: 1;
-
-  min-width: 0;
-
-  height: 62px;
-
-  padding:
-    0
-    18px;
-
-  border: 0;
-
-  border-right: 1px solid #eeeeee;
-
-  outline: none;
-
-  background: #ffffff;
-
-  color: #333333;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 11px;
-
-  letter-spacing: 1.8px;
-
-  cursor: pointer;
-}
-
-
-.all-products-filter-bar select:first-child {
-  border-left: 1px solid #eeeeee;
-}
-
-
-/* =====================================================
-   TOOLBAR
-===================================================== */
-
-.all-products-toolbar {
-  width: 100%;
-
-  padding:
-    18px
-    60px;
-
-  box-sizing: border-box;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 10px;
-
-  letter-spacing: 1.8px;
-
-  color: #777777;
-}
-
-
-.all-products-toolbar button {
-  border: 0;
-
-  background: transparent;
-
-  color: #333333;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 10px;
-
-  letter-spacing: 1.5px;
-
-  cursor: pointer;
-
-  text-decoration: underline;
-}
-
-
-/* =====================================================
-   EMPTY
-===================================================== */
-
-.all-products-empty {
-  grid-column: 1 / -1;
-
-  text-align: center;
-
-  padding: 80px 20px;
-
-  color: #777777;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  letter-spacing: 1.5px;
-}
-
-
-.all-products-empty button {
-  margin-top: 15px;
-
-  border: 1px solid #222222;
-
-  background: #ffffff;
-
-  padding:
-    10px
-    20px;
-
-  cursor: pointer;
-
-  font-size: 10px;
-
-  letter-spacing: 1.5px;
-}
-
-
-/* =====================================================
-   TABLET
-===================================================== */
-
-@media (max-width: 1100px) {
-
-  .all-products-filter-wrapper {
-    padding:
-      0
-      35px;
+    isolation: isolate;
   }
 
-  .all-products-toolbar {
-    padding-left: 35px;
-    padding-right: 35px;
-  }
 
-}
+  /* =================================================
+     POPUP
 
+     Extra bottom padding prevents content
+     from hiding behind mobile bottom nav.
+  ================================================= */
 
-/* =====================================================
-   MOBILE
-===================================================== */
+  .mobile-filter-popup {
+    width: 100%;
 
-@media (max-width: 768px) {
+    max-width: 700px;
 
-  .all-products-filter-wrapper {
-    padding:
-      0
-      10px;
+    max-height: 88vh;
+
+    background: #ffffff;
+
+    border-radius: 16px 16px 0 0;
 
     overflow: hidden;
+
+    position: relative;
+
+    z-index: 2147483647;
+
+    box-shadow:
+      0 -8px 30px
+      rgba(0, 0, 0, 0.15);
+
+    animation:
+      mobilePopupUp
+      0.25s
+      ease-out;
   }
 
 
-  .all-products-filter-bar {
-    justify-content: flex-start;
+  @keyframes mobilePopupUp {
 
-    overflow-x: auto;
+    from {
+      transform: translateY(100%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+
+  }
+
+
+  /* =================================================
+     POPUP HEADER
+  ================================================= */
+
+  .mobile-popup-header {
+    width: 100%;
+
+    min-height: 58px;
+
+    padding: 0 18px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid #eeeeee;
+
+    background: #ffffff;
+
+    position: relative;
+
+    z-index: 2;
+  }
+
+  .mobile-popup-header h2 {
+    margin: 0;
+
+    color: #111111;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+    letter-spacing: 2px;
+  }
+
+  .mobile-popup-header button {
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #222222;
+
+    font-size: 28px;
+
+    font-weight: 200;
+
+    line-height: 1;
+
+    cursor: pointer;
+  }
+
+
+  /* =================================================
+     FILTER CONTENT
+  ================================================= */
+
+  .mobile-popup-content {
+    max-height: calc(88vh - 58px);
+
+    overflow-y: auto;
+
+    padding:
+      20px
+      18px
+      100px;
+
+    box-sizing: border-box;
 
     scrollbar-width: none;
 
-    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
   }
 
-
-  .all-products-filter-bar::-webkit-scrollbar {
+  .mobile-popup-content::-webkit-scrollbar {
     display: none;
   }
 
 
-  .all-products-filter-bar select {
-    flex:
-      0 0 140px;
+  /* =================================================
+     FILTER GROUP
+  ================================================= */
 
-    width: 140px;
+  .popup-filter-group {
+    padding-bottom: 22px;
 
-    min-width: 140px;
+    margin-bottom: 20px;
 
-    height: 52px;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .popup-filter-group label {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: #222222;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    letter-spacing: 1.8px;
+  }
+
+
+  /* =================================================
+     FILTER OPTIONS
+  ================================================= */
+
+  .popup-options {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+  }
+
+  .popup-options button {
+    min-height: 38px;
+
+    padding: 0 13px;
+
+    border: 1px solid #dddddd;
+
+    background: #ffffff;
+
+    color: #555555;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border 0.2s ease;
+  }
+
+  .popup-options button.active {
+    background: #111111;
+
+    border-color: #111111;
+
+    color: #ffffff;
+  }
+
+
+  /* =================================================
+     APPLY
+  ================================================= */
+
+  .mobile-apply-button {
+    width: 100%;
+
+    height: 50px;
+
+    border: 1px solid #111111;
+
+    background: #111111;
+
+    color: #ffffff;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 10px;
+
+    letter-spacing: 1.7px;
+
+    cursor: pointer;
+
+    margin-top: 2px;
+  }
+
+
+  /* =================================================
+     CLEAR
+  ================================================= */
+
+  .mobile-clear-button {
+    width: 100%;
+
+    height: 45px;
+
+    margin-top: 10px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #555555;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    text-decoration: underline;
+
+    cursor: pointer;
+  }
+
+
+  /* =================================================
+     SORT POPUP
+  ================================================= */
+
+  .sort-popup {
+    width: 100%;
 
     padding:
       0
-      14px;
+      18px
+      35px;
 
-    font-size: 9px;
+    box-sizing: border-box;
+  }
+
+  .sort-mobile-options {
+    width: 100%;
+  }
+
+  .sort-mobile-options button {
+    width: 100%;
+
+    min-height: 54px;
+
+    padding: 0 4px;
+
+    border: 0;
+
+    border-bottom: 1px solid #eeeeee;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 10px;
 
     letter-spacing: 1.3px;
+
+    text-align: left;
+
+    cursor: pointer;
   }
 
+  .sort-mobile-options button.active {
+    color: #111111;
 
-  .all-products-toolbar {
-    padding:
-      15px
-      15px;
-
-    font-size: 9px;
+    font-weight: 500;
   }
 
+  .sort-mobile-options button b {
+    font-size: 17px;
 
-  .all-products-toolbar button {
-    font-size: 9px;
+    font-weight: 400;
+
+    color: #111111;
   }
 
 }
@@ -658,12 +1082,121 @@
 
 @media (max-width: 420px) {
 
-  .all-products-filter-bar select {
-    flex-basis: 130px;
+  .all-products-breadcrumb {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 
-    width: 130px;
+  .all-products-heading {
+    padding-top: 28px;
+    padding-bottom: 25px;
+  }
 
-    min-width: 130px;
+  .all-products-heading h1 {
+    font-size: 23px;
+
+    letter-spacing: 3px;
+  }
+
+
+  /* MOBILE BAR */
+
+  .mobile-filter-bar,
+  .mobile-filter-bar button {
+    height: 52px;
+  }
+
+  .mobile-filter-bar button {
+    font-size: 10px;
+
+    letter-spacing: 1.7px;
+  }
+
+
+  /* TOOLBAR */
+
+  .all-products-toolbar {
+    padding: 13px 12px;
+
+    font-size: 8px;
+  }
+
+  .all-products-toolbar button {
+    font-size: 8px;
+  }
+
+
+  /* GRID */
+
+  .all-products-grid {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 75px;
+
+    column-gap: 8px;
+
+    row-gap: 25px;
+  }
+
+
+  /* PRODUCT */
+
+  .all-product-name {
+    font-size: 8px;
+
+    letter-spacing: 0.45px;
+  }
+
+  .all-current-price,
+  .all-old-price {
+    font-size: 8px;
+  }
+
+
+  /* POPUP */
+
+  .mobile-filter-popup {
+    max-height: 90vh;
+
+    border-radius: 14px 14px 0 0;
+  }
+
+  .mobile-popup-content {
+    max-height: calc(90vh - 58px);
+
+    padding-bottom: 110px;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media (max-width: 360px) {
+
+  .all-products-heading h1 {
+    font-size: 21px;
+
+    letter-spacing: 2.5px;
+  }
+
+  .mobile-filter-bar button {
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+  }
+
+  .all-products-grid {
+    padding-left: 8px;
+    padding-right: 8px;
+
+    column-gap: 7px;
+  }
+
+  .all-product-name {
+    font-size: 7.5px;
   }
 
 }
