@@ -1082,6 +1082,9 @@ const [showColorPopup, setShowColorPopup] =
         updatedReviews
       )
     );
+    window.dispatchEvent(
+  new Event("reviews-updated")
+);
 
 
     setReviewSuccess(true);

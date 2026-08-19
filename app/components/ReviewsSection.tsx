@@ -1,17 +1,437 @@
 import {
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
 
 import { Link } from "react-router";
 
-import { reviews } from "../data/reviews";
+import { reviews as staticReviews } from "../data/reviews";
+import { products } from "../data/products";
+import { dresses } from "../data/dresses";
 
 import "./ReviewsSection.css";
 
 
+/* =========================================================
+   TYPES
+========================================================= */
+
+type ProductItem = {
+  id: number;
+  slug: string;
+  name: string;
+
+  image?: string;
+  images?: string[];
+
+  rating?: number;
+  reviews?: number;
+};
+
+
+type ReviewMedia = {
+  name: string;
+  type: string;
+  data: string;
+};
+
+
+type ProductReview = {
+  id: string;
+  productId: number;
+  rating: number;
+  feedback: string;
+  media: ReviewMedia[];
+  createdAt: string;
+};
+
+
+type DisplayReview = {
+  id: string | number;
+
+  productId: number;
+
+  productSlug: string;
+
+  customerName: string;
+
+  customerInitial: string;
+
+  customerImage?: string;
+
+  productImage: string;
+
+  rating: number;
+
+  date: string;
+
+  text: string;
+
+  productName: string;
+
+  verified: boolean;
+
+  media?: ReviewMedia[];
+};
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const getReviewStorageKey = (
+  productId: number
+) => `product_reviews_${productId}`;
+
+
+/* =========================================================
+   GET ALL PRODUCT REVIEWS FROM LOCAL STORAGE
+========================================================= */
+
+const getLocalProductReviews = (
+  allProducts: ProductItem[]
+): DisplayReview[] => {
+
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+
+  const result: DisplayReview[] = [];
+
+
+  allProducts.forEach((product) => {
+
+    try {
+
+      const saved =
+        localStorage.getItem(
+          getReviewStorageKey(product.id)
+        );
+
+
+      if (!saved) {
+        return;
+      }
+
+
+      const parsed =
+        JSON.parse(saved);
+
+
+      if (!Array.isArray(parsed)) {
+        return;
+      }
+
+
+      parsed.forEach(
+        (review: ProductReview) => {
+
+          if (
+            !review ||
+            !review.id ||
+            !review.rating ||
+            !review.feedback
+          ) {
+            return;
+          }
+
+
+          const productImage =
+            product.images?.[0] ||
+            product.image ||
+            "";
+
+
+          result.push({
+
+            id: review.id,
+
+            productId:
+              product.id,
+
+            productSlug:
+              product.slug,
+
+            customerName:
+              "You",
+
+            customerInitial:
+              "YO",
+
+            productImage,
+
+            rating:
+              review.rating,
+
+            date:
+              new Date(
+                review.createdAt
+              ).toLocaleDateString(
+                "en-IN"
+              ),
+
+            text:
+              review.feedback,
+
+            productName:
+              product.name,
+
+            verified:
+              false,
+
+            media:
+              review.media || [],
+
+          });
+
+        }
+      );
+
+    } catch {
+
+      /* Ignore invalid localStorage */
+
+    }
+
+  });
+
+
+  return result;
+
+};
+
+
+/* =========================================================
+   COMPONENT
+========================================================= */
+
 export default function ReviewsSection() {
+
+
+  /* =======================================================
+     ALL PRODUCTS
+  ======================================================= */
+
+  const allProducts =
+    useMemo<ProductItem[]>(() => {
+
+      return [
+        ...(products as ProductItem[]),
+        ...(dresses as ProductItem[]),
+      ];
+
+    }, []);
+
+
+  /* =======================================================
+     REVIEWS STATE
+  ======================================================= */
+
+  const [
+    localReviews,
+    setLocalReviews,
+  ] = useState<DisplayReview[]>([]);
+
+
+  /* =======================================================
+     LOAD USER REVIEWS
+  ======================================================= */
+
+  const loadReviews = () => {
+
+    const savedReviews =
+      getLocalProductReviews(
+        allProducts
+      );
+
+
+    setLocalReviews(
+      savedReviews
+    );
+
+  };
+
+
+  useEffect(() => {
+
+    loadReviews();
+
+
+    /* =============================================
+       CUSTOM EVENT
+    ============================================= */
+
+    const handleReviewsUpdated =
+      () => {
+
+        loadReviews();
+
+      };
+
+
+    window.addEventListener(
+      "reviews-updated",
+      handleReviewsUpdated
+    );
+
+
+    /* =============================================
+       STORAGE EVENT
+       Works when localStorage changes
+       from another browser tab
+    ============================================= */
+
+    const handleStorage =
+      () => {
+
+        loadReviews();
+
+      };
+
+
+    window.addEventListener(
+      "storage",
+      handleStorage
+    );
+
+
+    /* =============================================
+       SMALL REFRESH
+       Helps same-tab localStorage updates
+    ============================================= */
+
+    const interval =
+      window.setInterval(() => {
+
+        loadReviews();
+
+      }, 1500);
+
+
+    return () => {
+
+      window.removeEventListener(
+        "reviews-updated",
+        handleReviewsUpdated
+      );
+
+
+      window.removeEventListener(
+        "storage",
+        handleStorage
+      );
+
+
+      window.clearInterval(
+        interval
+      );
+
+    };
+
+  }, [allProducts]);
+
+
+  /* =======================================================
+     CONVERT STATIC REVIEWS
+  ======================================================= */
+
+  const convertedStaticReviews =
+    useMemo<DisplayReview[]>(() => {
+
+      return staticReviews
+        .map((review) => {
+
+          const product =
+            allProducts.find(
+              (item) =>
+                Number(item.id) ===
+                Number(review.productId)
+            );
+
+
+          if (!product) {
+            return null;
+          }
+
+
+          const productImage =
+            product.images?.[0] ||
+            product.image ||
+            review.productImage ||
+            "";
+
+
+          return {
+
+            id:
+              `static-${review.id}`,
+
+            productId:
+              review.productId,
+
+            productSlug:
+              product.slug,
+
+            customerName:
+              review.customerName,
+
+            customerInitial:
+              review.customerInitial,
+
+            customerImage:
+              review.customerImage,
+
+            productImage,
+
+            rating:
+              review.rating,
+
+            date:
+              review.date,
+
+            text:
+              review.text,
+
+            productName:
+              product.name ||
+              review.productName,
+
+            verified:
+              review.verified,
+
+          };
+
+        })
+        .filter(
+          (
+            review
+          ): review is DisplayReview =>
+            review !== null
+        );
+
+    }, [allProducts]);
+
+
+  /* =======================================================
+     FINAL REVIEWS
+  ======================================================= */
+
+  const allReviews =
+    useMemo<DisplayReview[]>(() => {
+
+      return [
+        ...convertedStaticReviews,
+        ...localReviews,
+      ];
+
+    }, [
+      convertedStaticReviews,
+      localReviews,
+    ]);
+
 
   /* =================================================
      SLIDER REFS
@@ -19,6 +439,7 @@ export default function ReviewsSection() {
 
   const topSliderRef =
     useRef<HTMLDivElement>(null);
+
 
   const bottomSliderRef =
     useRef<HTMLDivElement>(null);
@@ -31,18 +452,22 @@ export default function ReviewsSection() {
   const pausedRef =
     useRef(false);
 
+
   const resumeTimerRef =
-    useRef<ReturnType<typeof setTimeout> | null>(
-      null
-    );
+    useRef<ReturnType<
+      typeof setTimeout
+    > | null>(null);
 
 
   /* =================================================
      SELECTED REVIEW
   ================================================= */
 
-  const [selectedReview, setSelectedReview] =
-    useState<(typeof reviews)[number] | null>(
+  const [
+    selectedReview,
+    setSelectedReview,
+  ] =
+    useState<DisplayReview | null>(
       null
     );
 
@@ -55,11 +480,17 @@ export default function ReviewsSection() {
 
     pausedRef.current = true;
 
-    if (resumeTimerRef.current) {
+
+    if (
+      resumeTimerRef.current
+    ) {
+
       clearTimeout(
         resumeTimerRef.current
       );
+
     }
+
   };
 
 
@@ -80,11 +511,16 @@ export default function ReviewsSection() {
 
   const resumeAfterTouch = () => {
 
-    if (resumeTimerRef.current) {
+    if (
+      resumeTimerRef.current
+    ) {
+
       clearTimeout(
         resumeTimerRef.current
       );
+
     }
+
 
     resumeTimerRef.current =
       setTimeout(() => {
@@ -101,14 +537,14 @@ export default function ReviewsSection() {
   ================================================= */
 
   const openReview = (
-    review: (typeof reviews)[number]
+    review: DisplayReview
   ) => {
 
     pauseSlider();
 
-    setSelectedReview(review);
-
-    document.body.style.overflow = "hidden";
+    setSelectedReview(
+      review
+    );
 
   };
 
@@ -119,11 +555,11 @@ export default function ReviewsSection() {
 
   const closeReview = () => {
 
-    setSelectedReview(null);
+    setSelectedReview(
+      null
+    );
 
     resumeSlider();
-
-    document.body.style.overflow = "";
 
   };
 
@@ -134,22 +570,38 @@ export default function ReviewsSection() {
 
   const nextReview = () => {
 
-    if (!selectedReview) return;
+    if (!selectedReview) {
+      return;
+    }
+
 
     const currentIndex =
-      reviews.findIndex(
+      allReviews.findIndex(
         (review) =>
-          review.id ===
-          selectedReview.id
+          String(review.id) ===
+          String(
+            selectedReview.id
+          )
       );
 
+
+    if (
+      currentIndex === -1 ||
+      allReviews.length === 0
+    ) {
+      return;
+    }
+
+
     const nextIndex =
-      currentIndex >= reviews.length - 1
+      currentIndex >=
+      allReviews.length - 1
         ? 0
         : currentIndex + 1;
 
+
     setSelectedReview(
-      reviews[nextIndex]
+      allReviews[nextIndex]
     );
 
   };
@@ -161,29 +613,46 @@ export default function ReviewsSection() {
 
   const previousReview = () => {
 
-    if (!selectedReview) return;
+    if (!selectedReview) {
+      return;
+    }
+
 
     const currentIndex =
-      reviews.findIndex(
+      allReviews.findIndex(
         (review) =>
-          review.id ===
-          selectedReview.id
+          String(review.id) ===
+          String(
+            selectedReview.id
+          )
       );
+
+
+    if (
+      currentIndex === -1 ||
+      allReviews.length === 0
+    ) {
+      return;
+    }
+
 
     const previousIndex =
       currentIndex <= 0
-        ? reviews.length - 1
+        ? allReviews.length - 1
         : currentIndex - 1;
 
+
     setSelectedReview(
-      reviews[previousIndex]
+      allReviews[
+        previousIndex
+      ]
     );
 
   };
 
 
   /* =================================================
-     KEYBOARD
+     ESC + ARROW KEYS
   ================================================= */
 
   useEffect(() => {
@@ -192,18 +661,33 @@ export default function ReviewsSection() {
       event: KeyboardEvent
     ) => {
 
-      if (!selectedReview) return;
 
-      if (event.key === "Escape") {
+      if (
+        event.key === "Escape"
+      ) {
+
         closeReview();
+
       }
 
-      if (event.key === "ArrowRight") {
+
+      if (
+        selectedReview &&
+        event.key === "ArrowRight"
+      ) {
+
         nextReview();
+
       }
 
-      if (event.key === "ArrowLeft") {
+
+      if (
+        selectedReview &&
+        event.key === "ArrowLeft"
+      ) {
+
         previousReview();
+
       }
 
     };
@@ -224,22 +708,10 @@ export default function ReviewsSection() {
 
     };
 
-  }, [selectedReview]);
-
-
-  /* =================================================
-     BODY SCROLL CLEANUP
-  ================================================= */
-
-  useEffect(() => {
-
-    return () => {
-
-      document.body.style.overflow = "";
-
-    };
-
-  }, []);
+  }, [
+    selectedReview,
+    allReviews,
+  ]);
 
 
   /* =================================================
@@ -251,6 +723,7 @@ export default function ReviewsSection() {
     const topSlider =
       topSliderRef.current;
 
+
     const bottomSlider =
       bottomSliderRef.current;
 
@@ -259,42 +732,52 @@ export default function ReviewsSection() {
       !topSlider ||
       !bottomSlider
     ) {
+
       return;
+
     }
 
 
     let animationFrame: number;
 
 
-    /* =================================================
+    /* =============================================
        BOTTOM START FROM RIGHT
-    ================================================= */
+    ============================================= */
 
-    const setInitialPosition = () => {
+    const setInitialPosition =
+      () => {
 
-      bottomSlider.scrollLeft =
-        bottomSlider.scrollWidth -
-        bottomSlider.clientWidth;
+        bottomSlider.scrollLeft =
+          Math.max(
+            0,
+            bottomSlider.scrollWidth -
+              bottomSlider.clientWidth
+          );
 
-    };
+      };
 
 
     setInitialPosition();
 
 
-    /* =================================================
+    /* =============================================
        AUTO MOVE
-    ================================================= */
+    ============================================= */
 
     const moveSliders = () => {
 
-      if (!pausedRef.current) {
+      if (
+        !pausedRef.current
+      ) {
+
 
         /* =========================================
            TOP → LEFT
         ========================================= */
 
-        topSlider.scrollLeft += 0.45;
+        topSlider.scrollLeft +=
+          0.45;
 
 
         if (
@@ -303,7 +786,8 @@ export default function ReviewsSection() {
           topSlider.scrollWidth - 2
         ) {
 
-          topSlider.scrollLeft = 0;
+          topSlider.scrollLeft =
+            0;
 
         }
 
@@ -312,16 +796,21 @@ export default function ReviewsSection() {
            BOTTOM → RIGHT
         ========================================= */
 
-        bottomSlider.scrollLeft -= 0.45;
+        bottomSlider.scrollLeft -=
+          0.45;
 
 
         if (
-          bottomSlider.scrollLeft <= 0
+          bottomSlider.scrollLeft <=
+          0
         ) {
 
           bottomSlider.scrollLeft =
-            bottomSlider.scrollWidth -
-            bottomSlider.clientWidth;
+            Math.max(
+              0,
+              bottomSlider.scrollWidth -
+                bottomSlider.clientWidth
+            );
 
         }
 
@@ -342,9 +831,9 @@ export default function ReviewsSection() {
       );
 
 
-    /* =================================================
+    /* =============================================
        RESIZE
-    ================================================= */
+    ============================================= */
 
     const handleResize = () => {
 
@@ -359,9 +848,9 @@ export default function ReviewsSection() {
     );
 
 
-    /* =================================================
+    /* =============================================
        CLEANUP
-    ================================================= */
+    ============================================= */
 
     return () => {
 
@@ -369,10 +858,12 @@ export default function ReviewsSection() {
         animationFrame
       );
 
+
       window.removeEventListener(
         "resize",
         handleResize
       );
+
 
       if (
         resumeTimerRef.current
@@ -386,7 +877,7 @@ export default function ReviewsSection() {
 
     };
 
-  }, []);
+  }, [allReviews.length]);
 
 
   /* =================================================
@@ -394,14 +885,14 @@ export default function ReviewsSection() {
   ================================================= */
 
   const topReviews =
-    reviews.filter(
+    allReviews.filter(
       (_, index) =>
         index % 2 === 0
     );
 
 
   const bottomReviews =
-    reviews.filter(
+    allReviews.filter(
       (_, index) =>
         index % 2 !== 0
     );
@@ -414,7 +905,7 @@ export default function ReviewsSection() {
   const ReviewCard = ({
     review,
   }: {
-    review: (typeof reviews)[number];
+    review: DisplayReview;
   }) => {
 
     return (
@@ -426,15 +917,20 @@ export default function ReviewsSection() {
         }
       >
 
-        {/* =================================================
-           PRODUCT IMAGE
-        ================================================= */}
+
+        {/* =========================================
+            PRODUCT IMAGE
+        ========================================= */}
 
         <div className="review-image-wrap">
 
           <img
-            src={review.productImage}
-            alt={review.productName}
+            src={
+              review.productImage
+            }
+            alt={
+              review.productName
+            }
             className="review-product-image"
             loading="lazy"
           />
@@ -442,16 +938,16 @@ export default function ReviewsSection() {
         </div>
 
 
-        {/* =================================================
-           CONTENT
-        ================================================= */}
+        {/* =========================================
+            REVIEW CONTENT
+        ========================================= */}
 
         <div className="review-content">
 
 
-          {/* =================================================
-             CUSTOMER
-          ================================================= */}
+          {/* =======================================
+              CUSTOMER
+          ======================================= */}
 
           <div className="review-customer">
 
@@ -472,9 +968,11 @@ export default function ReviewsSection() {
               ) : (
 
                 <span>
+
                   {
                     review.customerInitial
                   }
+
                 </span>
 
               )}
@@ -511,7 +1009,8 @@ export default function ReviewsSection() {
                   )}
 
                   {"☆".repeat(
-                    5 - review.rating
+                    5 -
+                      review.rating
                   )}
 
                 </span>
@@ -519,7 +1018,9 @@ export default function ReviewsSection() {
 
                 <span className="review-date">
 
-                  {review.date}
+                  {
+                    review.date
+                  }
 
                 </span>
 
@@ -530,34 +1031,39 @@ export default function ReviewsSection() {
           </div>
 
 
-          {/* =================================================
-             REVIEW TEXT
-          ================================================= */}
+          {/* =======================================
+              REVIEW TEXT
+          ======================================= */}
 
           <p className="review-text">
 
-            {review.text}
+            {
+              review.text
+            }
 
           </p>
 
 
-          {/* =================================================
-             PRODUCT
-          ================================================= */}
+          {/* =======================================
+              PRODUCT
+          ======================================= */}
 
           <Link
-            to={`/product/${review.productId}`}
+            to={`/product/${review.productSlug}`}
             className="review-product"
-
             onClick={(event) => {
+
               event.stopPropagation();
+
             }}
           >
 
             <div className="review-product-thumb">
 
               <img
-                src={review.productImage}
+                src={
+                  review.productImage
+                }
                 alt=""
                 loading="lazy"
               />
@@ -567,7 +1073,9 @@ export default function ReviewsSection() {
 
             <span>
 
-              {review.productName}
+              {
+                review.productName
+              }
 
             </span>
 
@@ -592,7 +1100,7 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-         HEADER
+          HEADER
       ================================================= */}
 
       <div className="reviews-header">
@@ -602,6 +1110,7 @@ export default function ReviewsSection() {
           <h2>
             ALL REVIEWS
           </h2>
+
 
           <p>
             What our customers say
@@ -621,7 +1130,8 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-         TOP ROW
+          TOP ROW
+          LEFT MOVEMENT
       ================================================= */}
 
       <div
@@ -630,19 +1140,15 @@ export default function ReviewsSection() {
           reviews-slider
           reviews-slider-top
         "
-
         onMouseEnter={
           pauseSlider
         }
-
         onMouseLeave={
           resumeSlider
         }
-
         onTouchStart={
           pauseSlider
         }
-
         onTouchEnd={
           resumeAfterTouch
         }
@@ -652,8 +1158,14 @@ export default function ReviewsSection() {
           (review) => (
 
             <ReviewCard
-              key={review.id}
-              review={review}
+              key={
+                String(
+                  review.id
+                )
+              }
+              review={
+                review
+              }
             />
 
           )
@@ -663,7 +1175,8 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-         BOTTOM ROW
+          BOTTOM ROW
+          RIGHT MOVEMENT
       ================================================= */}
 
       <div
@@ -672,19 +1185,15 @@ export default function ReviewsSection() {
           reviews-slider
           reviews-slider-bottom
         "
-
         onMouseEnter={
           pauseSlider
         }
-
         onMouseLeave={
           resumeSlider
         }
-
         onTouchStart={
           pauseSlider
         }
-
         onTouchEnd={
           resumeAfterTouch
         }
@@ -694,8 +1203,14 @@ export default function ReviewsSection() {
           (review) => (
 
             <ReviewCard
-              key={review.id}
-              review={review}
+              key={
+                String(
+                  review.id
+                )
+              }
+              review={
+                review
+              }
             />
 
           )
@@ -705,7 +1220,7 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-         VIEW ALL
+          VIEW ALL
       ================================================= */}
 
       <div className="reviews-bottom">
@@ -721,14 +1236,13 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-         REVIEW POPUP
+          REVIEW POPUP
       ================================================= */}
 
       {selectedReview && (
 
         <div
           className="review-modal-overlay"
-
           onClick={
             closeReview
           }
@@ -736,18 +1250,18 @@ export default function ReviewsSection() {
 
           <div
             className="review-modal"
-
             onClick={(event) =>
               event.stopPropagation()
             }
           >
 
 
-            {/* =================================================
-               IMAGE AREA
-            ================================================= */}
+            {/* =========================================
+                LEFT IMAGE
+            ========================================= */}
 
             <div className="review-modal-image-area">
+
 
               <img
                 src={
@@ -760,40 +1274,38 @@ export default function ReviewsSection() {
               />
 
 
-              {/* LEFT */}
+              {/* =====================================
+                  LEFT ARROW
+              ===================================== */}
 
               <button
                 type="button"
-
                 className="
                   review-modal-arrow
                   review-modal-arrow-left
                 "
-
                 onClick={
                   previousReview
                 }
-
                 aria-label="Previous review"
               >
                 ←
               </button>
 
 
-              {/* RIGHT */}
+              {/* =====================================
+                  RIGHT ARROW
+              ===================================== */}
 
               <button
                 type="button"
-
                 className="
                   review-modal-arrow
                   review-modal-arrow-right
                 "
-
                 onClick={
                   nextReview
                 }
-
                 aria-label="Next review"
               >
                 →
@@ -802,33 +1314,35 @@ export default function ReviewsSection() {
             </div>
 
 
-            {/* =================================================
-               CONTENT
-            ================================================= */}
+            {/* =========================================
+                RIGHT SIDE
+            ========================================= */}
 
             <div className="review-modal-content">
 
 
-              {/* CLOSE */}
+              {/* =====================================
+                  CLOSE
+              ===================================== */}
 
               <button
                 type="button"
-
                 className="review-modal-close"
-
                 onClick={
                   closeReview
                 }
-
                 aria-label="Close review"
               >
                 ×
               </button>
 
 
-              {/* CUSTOMER */}
+              {/* =====================================
+                  CUSTOMER
+              ===================================== */}
 
               <div className="review-modal-customer">
+
 
                 <div className="review-modal-avatar">
 
@@ -846,9 +1360,11 @@ export default function ReviewsSection() {
                   ) : (
 
                     <span>
+
                       {
                         selectedReview.customerInitial
                       }
+
                     </span>
 
                   )}
@@ -889,7 +1405,9 @@ export default function ReviewsSection() {
               </div>
 
 
-              {/* STARS */}
+              {/* =====================================
+                  STARS
+              ===================================== */}
 
               <div className="review-modal-rating">
 
@@ -905,7 +1423,9 @@ export default function ReviewsSection() {
               </div>
 
 
-              {/* REVIEW */}
+              {/* =====================================
+                  REVIEW TEXT
+              ===================================== */}
 
               <p className="review-modal-text">
 
@@ -916,11 +1436,15 @@ export default function ReviewsSection() {
               </p>
 
 
-              {/* PRODUCT */}
+              {/* =====================================
+                  PRODUCT BOTTOM
+              ===================================== */}
 
               <div className="review-modal-product">
 
+
                 <div className="review-modal-product-info">
+
 
                   <img
                     src={
@@ -931,6 +1455,7 @@ export default function ReviewsSection() {
                       review-modal-product-thumb
                     "
                   />
+
 
                   <span>
 
@@ -944,17 +1469,13 @@ export default function ReviewsSection() {
 
 
                 <Link
-                  to={`/product/${selectedReview.productId}`}
+                  to={`/product/${selectedReview.productSlug}`}
                   className="review-modal-shop"
-
                   onClick={() => {
 
                     setSelectedReview(
                       null
                     );
-
-                    document.body.style.overflow =
-                      "";
 
                   }}
                 >
@@ -974,4 +1495,5 @@ export default function ReviewsSection() {
     </section>
 
   );
+
 }
