@@ -395,11 +395,15 @@
   flex: 0 0 12px;
 }
 
-.product-description {
-  margin: 13px 0 18px;
-  color: #666;
-  font-size: 10px;
-  line-height: 1.65;
+/* =========================
+   SIZE CHART
+========================= */
+
+.product-offer svg {
+  width: 12px;
+  height: 12px;
+  color: #a66b2d;
+  flex: 0 0 12px;
 }
 
 /* =========================
@@ -432,44 +436,47 @@
   font-size: 10px;
 }
 
-.color-list {
+.size-list {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 10px;
 }
 
-.color-option {
-  width: 78px;
-  height: 92px;
-  min-width: 0;
+.size-list button {
+  width: 55px;
+  height: 50px;
   padding: 0;
-  border: 1px solid #ddd;
+  border: 1px solid #d8d8d8;
   background: #fff;
-  display: block;
-  overflow: hidden;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
   cursor: pointer;
-  transition: border-color .2s ease, transform .2s ease;
 }
 
-.color-option:hover {
-  border-color: #777;
-  transform: translateY(-1px);
+.size-list button:hover {
+  border-color: #111;
 }
 
-.color-option.active {
-  border: 2px solid #111;
+.size-list button.selected {
+  background: #111;
+  color: #fff;
+  border-color: #111;
 }
 
-.color-option img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  transition: transform .2s ease;
-}
+@media (max-width: 600px) {
+  .size-list {
+    gap: 8px;
+  }
 
-.color-option:hover img {
-  transform: scale(1.02);
+  .size-list button {
+    width: 55px;
+    height: 50px;
+    font-size: 13px;
+  }
 }
 
 /* =========================
@@ -1938,60 +1945,65 @@
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: rgba(0, 0, 0, 0.58);
+  padding: 10px;
+  background: rgba(0, 0, 0, .58);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  overflow: hidden;
 }
 
 .size-chart-modal {
   position: relative;
   width: min(900px, 100%);
-  max-height: 92vh;
+  max-width: 100%;
+  max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden;
   background: #fff;
   border-radius: 4px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
 }
 
 .size-chart-close {
   position: absolute;
-  top: 12px;
-  right: 14px;
-  width: 34px;
-  height: 34px;
+  top: 10px;
+  right: 12px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  padding: 0;
   border: 1px solid #222;
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 2;
 }
 
 .size-chart-close svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 .size-chart-header {
-  text-align: center;
-  padding: 18px 55px 12px;
+  padding: 18px 52px 10px;
   border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
 .size-chart-header h2 {
   margin: 0;
-  font-size: 16px;
-  font-weight: 600;
   color: #222;
+  font-size: clamp(14px, 2vw, 18px);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .size-chart-header p {
-  margin: 5px 0 0;
-  font-size: 12px;
+  margin: 4px 0 0;
   color: #777;
+  font-size: 11px;
 }
 
 .size-chart-units {
@@ -1999,17 +2011,17 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  padding: 14px 0 10px;
-  font-size: 12px;
+  padding: 10px;
+  font-size: 11px;
 }
 
 .size-chart-units button {
+  padding: 3px;
   border: 0;
   background: transparent;
-  cursor: pointer;
-  font-size: 12px;
   color: #999;
-  padding: 2px;
+  font-size: 11px;
+  cursor: pointer;
 }
 
 .size-chart-units button.active {
@@ -2018,27 +2030,32 @@
 }
 
 .size-chart-table-wrapper {
-  padding: 0 16px;
-  overflow-x: auto;
+  width: 100%;
+  padding: 0 12px;
+  overflow: hidden;
 }
 
 .size-chart-table {
   width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
-  min-width: 650px;
 }
 
 .size-chart-table th,
 .size-chart-table td {
+  height: 40px;
+  padding: 6px 3px;
   border: 1px solid #ddd;
-  height: 46px;
   text-align: center;
-  font-size: 12px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  font-size: clamp(8px, 1.4vw, 12px);
 }
 
 .size-chart-table th {
-  font-weight: 600;
   background: #fafafa;
+  font-weight: 600;
 }
 
 .size-chart-table td:first-child {
@@ -2048,211 +2065,105 @@
 .size-chart-guide-image {
   display: flex;
   justify-content: center;
-  padding: 22px 15px 5px;
+  padding: 14px 12px 0;
 }
 
 .size-chart-guide-image img {
-  width: 180px;
+  width: min(160px, 45vw);
   max-width: 100%;
   height: auto;
-  object-fit: contain;
+  display: block;
 }
 
 .size-chart-help {
-  padding: 5px 16px 25px;
-  font-size: 12px;
-  line-height: 1.7;
+  padding: 5px 16px 10px;
   color: #222;
+  font-size: clamp(10px, 1.5vw, 12px);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .size-chart-help p {
-  margin: 10px 0;
+  margin: 7px 0;
 }
 
 .size-chart-help strong {
   font-weight: 700;
 }
 
-
-/* MOBILE */
-
 @media (max-width: 600px) {
-
   .size-chart-overlay {
-    padding: 8px;
+    padding: 6px;
   }
 
   .size-chart-modal {
-    max-height: 95vh;
+    width: 100%;
+    max-height: 94vh;
   }
 
   .size-chart-header {
-    padding: 16px 45px 12px;
+    padding: 14px 44px 8px 12px;
   }
 
-  .size-chart-header h2 {
-    font-size: 14px;
-    line-height: 1.4;
+  .size-chart-units {
+    padding: 8px;
   }
 
   .size-chart-table-wrapper {
-    padding: 0 10px;
-  }
-
-  .size-chart-table {
-    min-width: 600px;
+    padding: 0 6px;
   }
 
   .size-chart-table th,
   .size-chart-table td {
-    height: 42px;
-    font-size: 11px;
+    height: 36px;
+    padding: 5px 2px;
+    font-size: 8px;
+  }
+
+  .size-chart-guide-image {
+    padding-top: 10px;
   }
 
   .size-chart-guide-image img {
-    width: 150px;
+    width: 125px;
   }
 
   .size-chart-help {
-    font-size: 11px;
+    padding: 3px 10px 8px;
+    font-size: 10px;
+    line-height: 1.45;
   }
 
-}
-
-/* =========================================================
-   SIZE SELECTOR
-========================================================= */
-
-.size-list {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.size-list button {
-  min-width: 44px;
-  height: 40px;
-
-  padding: 0 12px;
-
-  background: #ffffff;
-  color: #222222;
-
-  border: 1px solid #d8d8d8;
-  border-radius: 0;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.size-list button:hover {
-  border-color: #111111;
-}
-
-.size-list button.selected {
-  background: #111111;
-  color: #ffffff;
-  border-color: #111111;
-}
-
-.product-popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999999;
-  padding: 20px;
-}
-
-.product-popup {
-  width: 100%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 18px;
-  padding: 28px;
-  position: relative;
-  text-align: center;
-  animation: popupScale .25s ease;
-}
-
-.product-popup h3 {
-  margin: 0 0 12px;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.product-popup p {
-  margin: 0;
-  color: #666;
-  line-height: 1.6;
-}
-
-.product-popup-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 22px;
-}
-
-.product-popup-btn {
-  width: 100%;
-  height: 50px;
-  border: none;
-  border-radius: 10px;
-  margin-top: 24px;
-  background: #000;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-@keyframes popupScale {
-  from {
-    opacity: 0;
-    transform: scale(.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  .size-chart-help p {
+    margin: 5px 0;
   }
 }
 
-@media (max-width: 768px) {
-  .product-popup {
-    max-width: 100%;
-    padding: 22px;
-    border-radius: 14px;
+@media (max-width: 380px) {
+  .size-chart-overlay {
+    padding: 4px;
   }
 
-  .product-popup h3 {
-    font-size: 20px;
+  .size-chart-close {
+    top: 7px;
+    right: 7px;
+    width: 28px;
+    height: 28px;
   }
 
-  .product-popup p {
-    font-size: 14px;
+  .size-chart-header {
+    padding-right: 40px;
   }
 
-  .product-popup-btn {
-    height: 48px;
+  .size-chart-table th,
+  .size-chart-table td {
+    height: 33px;
+    padding: 4px 1px;
+    font-size: 7px;
+  }
+
+  .size-chart-help {
+    padding: 2px 8px 6px;
+    font-size: 9px;
   }
 }

@@ -2416,7 +2416,6 @@ const [showColorPopup, setShowColorPopup] =
 
           <tbody>
             {[
-              ["XS", 34, 32, 36, 13],
               ["S", 36, 34, 38, 13.5],
               ["M", 38, 36, 40, 14],
               ["L", 40, 38, 42, 14.5],
@@ -2885,4 +2884,3 @@ const [showColorPopup, setShowColorPopup] =
   );
 
 }
-``

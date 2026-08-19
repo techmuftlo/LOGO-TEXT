@@ -342,20 +342,15 @@ export default function ReviewsSection() {
     useMemo<DisplayReview[]>(() => {
 
       return staticReviews
-        .map((review) => {
-
-          const product =
-            allProducts.find(
-              (item) =>
-                Number(item.id) ===
-                Number(review.productId)
-            );
-
+        .map<DisplayReview | null>((review) => {
+          const product = allProducts.find(
+            (item) =>
+              Number(item.id) === Number(review.productId)
+          );
 
           if (!product) {
             return null;
           }
-
 
           const productImage =
             product.images?.[0] ||
@@ -363,52 +358,23 @@ export default function ReviewsSection() {
             review.productImage ||
             "";
 
-
           return {
-
-            id:
-              `static-${review.id}`,
-
-            productId:
-              review.productId,
-
-            productSlug:
-              product.slug,
-
-            customerName:
-              review.customerName,
-
-            customerInitial:
-              review.customerInitial,
-
-            customerImage:
-              review.customerImage,
-
+            id: `static-${review.id}`,
+            productId: review.productId,
+            productSlug: product.slug,
+            customerName: review.customerName,
+            customerInitial: review.customerInitial,
+            customerImage: review.customerImage,
             productImage,
-
-            rating:
-              review.rating,
-
-            date:
-              review.date,
-
-            text:
-              review.text,
-
-            productName:
-              product.name ||
-              review.productName,
-
-            verified:
-              review.verified,
-
+            rating: review.rating,
+            date: review.date,
+            text: review.text,
+            productName: product.name || review.productName,
+            verified: review.verified,
           };
-
         })
         .filter(
-          (
-            review
-          ): review is DisplayReview =>
+          (review): review is DisplayReview =>
             review !== null
         );
 
