@@ -31,7 +31,6 @@ export default function ReviewsSection() {
   const pausedRef =
     useRef(false);
 
-
   const resumeTimerRef =
     useRef<ReturnType<typeof setTimeout> | null>(
       null
@@ -56,15 +55,11 @@ export default function ReviewsSection() {
 
     pausedRef.current = true;
 
-
     if (resumeTimerRef.current) {
-
       clearTimeout(
         resumeTimerRef.current
       );
-
     }
-
   };
 
 
@@ -86,13 +81,10 @@ export default function ReviewsSection() {
   const resumeAfterTouch = () => {
 
     if (resumeTimerRef.current) {
-
       clearTimeout(
         resumeTimerRef.current
       );
-
     }
-
 
     resumeTimerRef.current =
       setTimeout(() => {
@@ -116,6 +108,8 @@ export default function ReviewsSection() {
 
     setSelectedReview(review);
 
+    document.body.style.overflow = "hidden";
+
   };
 
 
@@ -129,6 +123,8 @@ export default function ReviewsSection() {
 
     resumeSlider();
 
+    document.body.style.overflow = "";
+
   };
 
 
@@ -140,19 +136,17 @@ export default function ReviewsSection() {
 
     if (!selectedReview) return;
 
-
     const currentIndex =
       reviews.findIndex(
         (review) =>
-          review.id === selectedReview.id
+          review.id ===
+          selectedReview.id
       );
-
 
     const nextIndex =
       currentIndex >= reviews.length - 1
         ? 0
         : currentIndex + 1;
-
 
     setSelectedReview(
       reviews[nextIndex]
@@ -169,19 +163,17 @@ export default function ReviewsSection() {
 
     if (!selectedReview) return;
 
-
     const currentIndex =
       reviews.findIndex(
         (review) =>
-          review.id === selectedReview.id
+          review.id ===
+          selectedReview.id
       );
-
 
     const previousIndex =
       currentIndex <= 0
         ? reviews.length - 1
         : currentIndex - 1;
-
 
     setSelectedReview(
       reviews[previousIndex]
@@ -191,7 +183,7 @@ export default function ReviewsSection() {
 
 
   /* =================================================
-     ESC KEY
+     KEYBOARD
   ================================================= */
 
   useEffect(() => {
@@ -200,30 +192,18 @@ export default function ReviewsSection() {
       event: KeyboardEvent
     ) => {
 
+      if (!selectedReview) return;
+
       if (event.key === "Escape") {
-
         closeReview();
-
       }
 
-
-      if (
-        selectedReview &&
-        event.key === "ArrowRight"
-      ) {
-
+      if (event.key === "ArrowRight") {
         nextReview();
-
       }
 
-
-      if (
-        selectedReview &&
-        event.key === "ArrowLeft"
-      ) {
-
+      if (event.key === "ArrowLeft") {
         previousReview();
-
       }
 
     };
@@ -248,6 +228,21 @@ export default function ReviewsSection() {
 
 
   /* =================================================
+     BODY SCROLL CLEANUP
+  ================================================= */
+
+  useEffect(() => {
+
+    return () => {
+
+      document.body.style.overflow = "";
+
+    };
+
+  }, []);
+
+
+  /* =================================================
      AUTO SLIDER
   ================================================= */
 
@@ -264,18 +259,16 @@ export default function ReviewsSection() {
       !topSlider ||
       !bottomSlider
     ) {
-
       return;
-
     }
 
 
     let animationFrame: number;
 
 
-    /* =============================================
+    /* =================================================
        BOTTOM START FROM RIGHT
-    ============================================= */
+    ================================================= */
 
     const setInitialPosition = () => {
 
@@ -289,9 +282,9 @@ export default function ReviewsSection() {
     setInitialPosition();
 
 
-    /* =============================================
+    /* =================================================
        AUTO MOVE
-    ============================================= */
+    ================================================= */
 
     const moveSliders = () => {
 
@@ -349,9 +342,9 @@ export default function ReviewsSection() {
       );
 
 
-    /* =============================================
+    /* =================================================
        RESIZE
-    ============================================= */
+    ================================================= */
 
     const handleResize = () => {
 
@@ -366,9 +359,9 @@ export default function ReviewsSection() {
     );
 
 
-    /* =============================================
+    /* =================================================
        CLEANUP
-    ============================================= */
+    ================================================= */
 
     return () => {
 
@@ -376,12 +369,10 @@ export default function ReviewsSection() {
         animationFrame
       );
 
-
       window.removeEventListener(
         "resize",
         handleResize
       );
-
 
       if (
         resumeTimerRef.current
@@ -435,9 +426,9 @@ export default function ReviewsSection() {
         }
       >
 
-        {/* =========================================
-            PRODUCT IMAGE
-        ========================================= */}
+        {/* =================================================
+           PRODUCT IMAGE
+        ================================================= */}
 
         <div className="review-image-wrap">
 
@@ -451,16 +442,16 @@ export default function ReviewsSection() {
         </div>
 
 
-        {/* =========================================
-            REVIEW CONTENT
-        ========================================= */}
+        {/* =================================================
+           CONTENT
+        ================================================= */}
 
         <div className="review-content">
 
 
-          {/* =======================================
-              CUSTOMER
-          ======================================= */}
+          {/* =================================================
+             CUSTOMER
+          ================================================= */}
 
           <div className="review-customer">
 
@@ -469,7 +460,9 @@ export default function ReviewsSection() {
               {review.customerImage ? (
 
                 <img
-                  src={review.customerImage}
+                  src={
+                    review.customerImage
+                  }
                   alt={
                     review.customerName
                   }
@@ -537,9 +530,9 @@ export default function ReviewsSection() {
           </div>
 
 
-          {/* =======================================
-              REVIEW TEXT
-          ======================================= */}
+          {/* =================================================
+             REVIEW TEXT
+          ================================================= */}
 
           <p className="review-text">
 
@@ -548,18 +541,16 @@ export default function ReviewsSection() {
           </p>
 
 
-          {/* =======================================
-              PRODUCT
-          ======================================= */}
+          {/* =================================================
+             PRODUCT
+          ================================================= */}
 
           <Link
             to={`/product/${review.productId}`}
             className="review-product"
 
             onClick={(event) => {
-
               event.stopPropagation();
-
             }}
           >
 
@@ -601,7 +592,7 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-          HEADER
+         HEADER
       ================================================= */}
 
       <div className="reviews-header">
@@ -611,7 +602,6 @@ export default function ReviewsSection() {
           <h2>
             ALL REVIEWS
           </h2>
-
 
           <p>
             What our customers say
@@ -631,8 +621,7 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-          TOP ROW
-          LEFT MOVEMENT
+         TOP ROW
       ================================================= */}
 
       <div
@@ -674,8 +663,7 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-          BOTTOM ROW
-          RIGHT MOVEMENT
+         BOTTOM ROW
       ================================================= */}
 
       <div
@@ -717,7 +705,7 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-          VIEW ALL
+         VIEW ALL
       ================================================= */}
 
       <div className="reviews-bottom">
@@ -733,7 +721,7 @@ export default function ReviewsSection() {
 
 
       {/* =================================================
-          REVIEW POPUP
+         REVIEW POPUP
       ================================================= */}
 
       {selectedReview && (
@@ -755,12 +743,11 @@ export default function ReviewsSection() {
           >
 
 
-            {/* =========================================
-                LEFT IMAGE
-            ========================================= */}
+            {/* =================================================
+               IMAGE AREA
+            ================================================= */}
 
             <div className="review-modal-image-area">
-
 
               <img
                 src={
@@ -773,9 +760,7 @@ export default function ReviewsSection() {
               />
 
 
-              {/* =====================================
-                  LEFT ARROW
-              ===================================== */}
+              {/* LEFT */}
 
               <button
                 type="button"
@@ -795,9 +780,7 @@ export default function ReviewsSection() {
               </button>
 
 
-              {/* =====================================
-                  RIGHT ARROW
-              ===================================== */}
+              {/* RIGHT */}
 
               <button
                 type="button"
@@ -819,16 +802,14 @@ export default function ReviewsSection() {
             </div>
 
 
-            {/* =========================================
-                RIGHT SIDE
-            ========================================= */}
+            {/* =================================================
+               CONTENT
+            ================================================= */}
 
             <div className="review-modal-content">
 
 
-              {/* =====================================
-                  CLOSE
-              ===================================== */}
+              {/* CLOSE */}
 
               <button
                 type="button"
@@ -845,12 +826,9 @@ export default function ReviewsSection() {
               </button>
 
 
-              {/* =====================================
-                  CUSTOMER
-              ===================================== */}
+              {/* CUSTOMER */}
 
               <div className="review-modal-customer">
-
 
                 <div className="review-modal-avatar">
 
@@ -911,9 +889,7 @@ export default function ReviewsSection() {
               </div>
 
 
-              {/* =====================================
-                  STARS
-              ===================================== */}
+              {/* STARS */}
 
               <div className="review-modal-rating">
 
@@ -929,9 +905,7 @@ export default function ReviewsSection() {
               </div>
 
 
-              {/* =====================================
-                  REVIEW TEXT
-              ===================================== */}
+              {/* REVIEW */}
 
               <p className="review-modal-text">
 
@@ -942,15 +916,11 @@ export default function ReviewsSection() {
               </p>
 
 
-              {/* =====================================
-                  PRODUCT BOTTOM
-              ===================================== */}
+              {/* PRODUCT */}
 
               <div className="review-modal-product">
 
-
                 <div className="review-modal-product-info">
-
 
                   <img
                     src={
@@ -961,7 +931,6 @@ export default function ReviewsSection() {
                       review-modal-product-thumb
                     "
                   />
-
 
                   <span>
 
@@ -984,6 +953,9 @@ export default function ReviewsSection() {
                       null
                     );
 
+                    document.body.style.overflow =
+                      "";
+
                   }}
                 >
                   Shop now
@@ -1002,5 +974,4 @@ export default function ReviewsSection() {
     </section>
 
   );
-
 }

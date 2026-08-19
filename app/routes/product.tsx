@@ -191,6 +191,11 @@ const [sizeUnit, setSizeUnit] =
 
   const [addedMessage, setAddedMessage] =
     useState("");
+    const [showSizePopup, setShowSizePopup] =
+  useState(false);
+
+const [showColorPopup, setShowColorPopup] =
+  useState(false);
 
 
   /* =======================================================
@@ -553,7 +558,7 @@ const [sizeUnit, setSizeUnit] =
     product.sizes.length > 0 &&
     !selectedSize
   ) {
-    alert("Please select a size.");
+   setShowSizePopup(true);
     return;
   }
 
@@ -566,7 +571,7 @@ const [sizeUnit, setSizeUnit] =
     product.colors.length > 0 &&
     !selectedColor
   ) {
-    alert("Please select a color.");
+    setShowColorPopup(true);
     return;
   }
 
@@ -2480,6 +2485,78 @@ const [sizeUnit, setSizeUnit] =
 
       </div>
 
+    </div>
+  </div>
+)}
+
+{/* SIZE POPUP */}
+
+{showSizePopup && (
+  <div
+    className="product-popup-overlay"
+    onClick={() => setShowSizePopup(false)}
+  >
+    <div
+      className="product-popup"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className="product-popup-close"
+        onClick={() => setShowSizePopup(false)}
+      >
+        <FiX />
+      </button>
+
+      <h3>Select Size</h3>
+
+      <p>
+        Please select a size before
+        adding this product to cart.
+      </p>
+
+      <button
+        className="product-popup-btn"
+        onClick={() => setShowSizePopup(false)}
+      >
+        OK
+      </button>
+    </div>
+  </div>
+)}
+
+{/* COLOR POPUP */}
+
+{showColorPopup && (
+  <div
+    className="product-popup-overlay"
+    onClick={() => setShowColorPopup(false)}
+  >
+    <div
+      className="product-popup"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className="product-popup-close"
+        onClick={() => setShowColorPopup(false)}
+      >
+        <FiX />
+      </button>
+
+      <h3>Select Color</h3>
+
+      <p>
+        Please select a color before
+        adding this product to cart.
+      </p>
+
+      <button
+        className="product-popup-btn"
+        onClick={() => setShowColorPopup(false)}
+      >
+        OK
+      </button>
     </div>
   </div>
 )}
